@@ -3,119 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Konvert Cepat</title>
+    <title>Download Video TikTok Tanpa Watermark - Konvert Cepat</title>
+    
+    <meta name="description" content="Download video TikTok, IG, FB, dan YT tanpa watermark kualitas HD. Cepat, gratis, dan tanpa aplikasi tambahan.">
+    <meta name="keywords" content="tiktok downloader, download video tiktok no watermark, konvert cepat, download mp3 tiktok">
+    <meta property="og:title" content="Konvert Cepat - Video Downloader All-in-One">
+    <meta property="og:description" content="Simpan video favoritmu tanpa watermark langsung ke galeri.">
+    <meta property="og:image" content="https://konvert-cepat.vercel.app/og-image.jpg">
+    
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    
     <style>
-        .custom-shadow { box-shadow: 0 10px 40px -10px rgba(0,0,0,0.1); }
-        #loading { display: none; }
+        body { font-family: 'Inter', sans-serif; }
+        .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .gradient-bg { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); }
+        .btn-gradient { background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%); transition: 0.3s; }
+        .btn-gradient:hover { opacity: 0.9; transform: translateY(-2px); }
+        video { width: 100%; border-radius: 15px; background: #000; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); }
     </style>
 </head>
-<body class="bg-gray-100 p-4">
+<body class="bg-gray-50 text-gray-900 min-h-screen">
 
-    <div class="flex justify-center mb-6">
-        <script type="text/javascript">
-            atOptions = { 'key' : '03b1cb8ee7c0832d153c554b239fa686', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
-        </script>
-        <script type="text/javascript" src="//www.highperformanceformat.com/03b1cb8ee7c0832d153c554b239fa686/invoke.js"></script>
-    </div>
+    <nav class="p-4 bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-md mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-lg gradient-bg flex items-center justify-center text-white font-bold text-sm shadow-md">A</div>
+                <span class="font-bold text-lg tracking-tight">Konvert Cepat</span>
+            </div>
+            <div class="text-[10px] bg-indigo-100 text-indigo-600 px-2 py-1 rounded-full font-bold">VERSI 2.0</div>
+        </div>
+    </nav>
 
-    <div class="max-w-md mx-auto bg-white rounded-2xl p-6 custom-shadow">
-        <h1 class="text-xl font-bold text-center mb-6">KONVERT CEPAT</h1>
-        
-        <form id="dlForm" class="space-y-4">
-            <input type="url" id="urlInput" placeholder="Tempel link video..." class="w-full p-4 border rounded-xl outline-none" required>
-            <button type="submit" class="w-full py-4 bg-indigo-600 text-white font-bold rounded-xl">PROSES VIDEO</button>
-        </form>
-
-        <div id="loading" class="text-center py-6 font-bold text-indigo-600 animate-pulse">Sabar Lan, lagi diproses...</div>
-
-        <div id="result" class="hidden mt-6 space-y-4">
-            <video id="preview" controls class="w-full rounded-xl bg-black"></video>
-            
-            <button id="saveVideo" class="w-full py-4 bg-green-500 text-white font-bold rounded-xl shadow-lg">
-                DOWNLOAD VIDEO SEKARANG
-            </button>
-            <p class="text-[10px] text-center text-gray-400">Klik tombol hijau, tunggu loading 100% sampai file tersimpan.</p>
+    <div class="flex justify-center py-6">
+        <div id="ad-top">
+            <script type="text/javascript">
+                atOptions = { 'key' : '03b1cb8ee7c0832d153c554b239fa686', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+            </script>
+            <script type="text/javascript" src="//www.highperformanceformat.com/03b1cb8ee7c0832d153c554b239fa686/invoke.js"></script>
         </div>
     </div>
+
+    <main class="max-w-md mx-auto px-4 space-y-6 pb-24">
+        
+        <div class="glass-card rounded-3xl p-6 shadow-xl border border-gray-100">
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-black text-gray-800">Video Downloader</h2>
+                <p class="text-xs text-gray-500 mt-1">Tempel link, klik proses, simpan ke galeri!</p>
+            </div>
+
+            <form id="dlForm" class="space-y-4">
+                <div class="relative">
+                    <input type="url" id="urlInput" placeholder="https://www.tiktok.com/..." 
+                        class="w-full p-4 pr-12 rounded-2xl border-2 border-gray-100 bg-gray-50 outline-none focus:border-indigo-500 transition-all text-sm" required>
+                    <button type="button" id="pasteBtn" class="absolute right-4 top-4 text-gray-400 hover:text-indigo-600">📋</button>
+                </div>
+                <button type="submit" id="submitBtn" class="w-full py-4 btn-gradient text-white font-bold rounded-2xl shadow-lg shadow-indigo-200">
+                    PROSES VIDEO
+                </button>
+            </form>
+
+            <div class="mt-8 pt-8 border-t border-dashed border-gray-200">
+                <script async="async" data-cfasync="false" src="https://pl29331540.profitablecpmratenetwork.com/3870dd5ba23492d660d88ce310ec65e8/invoke.js"></script>
+                <div id="container-3870dd5ba23492d660d88ce310ec65e8"></div>
+            </div>
+
+            <div id="result" class="hidden mt-6 space-y-4 animate-fade-in">
+                <div id="loading" class="text-center py-4 font-bold text-indigo-600 animate-pulse text-sm">Menghubungkan ke server...</div>
+                
+                <div id="displayArea" class="hidden space-y-4">
+                    <video id="preview" controls preload="none"></video>
+                    <div class="flex flex-col gap-3">
+                        <a id="dlVideo" href="#" target="_blank" class="w-full py-4 bg-green-500 text-white font-bold rounded-xl text-center shadow-lg active:scale-95 transition">SIMPAN VIDEO (HD)</a>
+                        <a id="dlAudio" href="#" target="_blank" class="w-full py-4 bg-purple-600 text-white font-bold rounded-xl text-center shadow-lg active:scale-95 transition text-sm">SIMPAN MP3 (AUDIO)</a>
+                    </div>
+                    <div class="p-4 bg-amber-50 rounded-xl border border-amber-100">
+                        <p class="text-[10px] text-amber-700 leading-relaxed font-medium text-center">
+                            <b>INFO TELEGRAM:</b> Jika download tidak jalan, klik titik tiga (⋮) di pojok kanan atas lalu pilih <b>"Buka di Browser"</b> agar video tersimpan otomatis ke Galeri.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+            <h3 class="font-bold text-sm mb-4">Kenapa Memilih Konvert Cepat?</h3>
+            <ul class="text-[12px] text-gray-500 space-y-3">
+                <li class="flex items-start gap-2">✅ <b>No Watermark:</b> Hasil video bersih tanpa logo TikTok.</li>
+                <li class="flex items-start gap-2">✅ <b>Kualitas HD:</b> Mengambil resolusi tertinggi dari server.</li>
+                <li class="flex items-start gap-2">✅ <b>Tanpa Login:</b> Langsung pakai tanpa perlu daftar akun.</li>
+            </ul>
+        </div>
+
+    </main>
+
+    <footer class="text-center py-8 text-gray-400 text-[10px]">
+        &copy; 2026 Konvert Cepat by Alan Supiandi. Made in Batujajar.
+    </footer>
 
     <script src="https://pl29331539.profitablecpmratenetwork.com/de/48/ad/de48adecd401f473c5c180796b5076eb.js"></script>
 
     <script>
-        let videoDataUrl = "";
+        const form = document.getElementById('dlForm');
+        const urlInput = document.getElementById('urlInput');
+        const result = document.getElementById('result');
+        const loading = document.getElementById('loading');
+        const displayArea = document.getElementById('displayArea');
+        const preview = document.getElementById('preview');
+        const dlVideo = document.getElementById('dlVideo');
+        const dlAudio = document.getElementById('dlAudio');
 
-        // JURUS SAKTI DOWNLOAD (BLOB METHOD)
-        async function forceDownload(url, filename) {
-            const btn = document.getElementById('saveVideo');
-            const originalText = btn.innerText;
-            
-            try {
-                btn.innerText = "SEDANG MENGUNDUH... 0%";
-                btn.disabled = true;
-
-                // Kita ambil datanya secara mentah (blob)
-                const response = await fetch(url);
-                const reader = response.body.getReader();
-                const contentLength = +response.headers.get('Content-Length');
-                
-                let receivedLength = 0;
-                let chunks = []; 
-                
-                while(true) {
-                    const {done, value} = await reader.read();
-                    if (done) break;
-                    chunks.push(value);
-                    receivedLength += value.length;
-                    
-                    // Update progress buat gaya profesional
-                    let progress = Math.round((receivedLength / contentLength) * 100);
-                    btn.innerText = `SEDANG MENGUNDUH... ${progress}%`;
-                }
-
-                // Gabungkan potongan video jadi satu file
-                const blob = new Blob(chunks);
-                const blobUrl = window.URL.createObjectURL(blob);
-                
-                // Pancing browser buat nyimpen file
-                const a = document.createElement('a');
-                a.href = blobUrl;
-                a.download = filename;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                window.URL.revokeObjectURL(blobUrl);
-
-                btn.innerText = "TERSIMPAN!";
-            } catch (err) {
-                // Kalau gagal (CORS), cara terakhir: buka di tab baru
-                window.open(url, '_blank');
-                btn.innerText = "GAGAL, COBA LAGI";
-            } finally {
-                btn.disabled = false;
-                setTimeout(() => { btn.innerText = originalText; }, 3000);
-            }
-        }
-
-        document.getElementById('dlForm').onsubmit = async (e) => {
-            e.preventDefault();
-            const val = document.getElementById('urlInput').value;
-            document.getElementById('loading').style.display = "block";
-            document.getElementById('result').classList.add('hidden');
-
-            try {
-                const res = await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(val)}`);
-                const json = await res.json();
-                if(json.data) {
-                    videoDataUrl = json.data.play || json.data.url;
-                    document.getElementById('preview').src = videoDataUrl;
-                    document.getElementById('result').classList.remove('hidden');
-                }
-            } catch(e) { alert("Koneksi gangguan, Lan!"); }
-            document.getElementById('loading').style.display = "none";
+        // Fungsi Paste
+        document.getElementById('pasteBtn').onclick = async () => {
+            const text = await navigator.clipboard.readText();
+            urlInput.value = text;
         };
 
-        document.getElementById('saveVideo').onclick = () => {
-            forceDownload(videoDataUrl, "Video_Alan_Project.mp4");
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            result.classList.remove('hidden');
+            loading.classList.remove('hidden');
+            displayArea.classList.add('hidden');
+
+            try {
+                const res = await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(urlInput.value)}`);
+                const json = await res.json();
+                
+                if(json.data) {
+                    const videoLink = json.data.play || json.data.url;
+                    const audioLink = json.data.music || "";
+
+                    preview.src = videoLink;
+                    dlVideo.href = videoLink + "&download=1"; // Trik force download
+                    dlAudio.href = audioLink + "&download=1";
+
+                    loading.classList.add('hidden');
+                    displayArea.classList.remove('hidden');
+                } else {
+                    alert("Gagal ambil video, Lan. Link-nya bener nggak?");
+                    result.classList.add('hidden');
+                }
+            } catch(err) {
+                alert("Gangguan server.");
+                result.classList.add('hidden');
+            }
         };
     </script>
 </body>
