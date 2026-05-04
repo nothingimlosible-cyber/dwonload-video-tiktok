@@ -43,8 +43,20 @@
         </nav>
     </header>
 
-    <main class="max-w-4xl mx-auto px-4 py-12 space-y-12">
-        
+    <div class="max-w-7xl mx-auto px-4 mt-4 flex justify-center">
+        <script type="text/javascript">
+            atOptions = {
+                'key' : '03b1cb8ee7c0832d153c554b239fa686',
+                'format' : 'iframe',
+                'height' : 250,
+                'width' : 300,
+                'params' : {}
+            };
+        </script>
+        <script type="text/javascript" src="//www.highperformanceformat.com/03b1cb8ee7c0832d153c554b239fa686/invoke.js"></script>
+    </div>
+
+    <main class="max-w-4xl mx-auto px-4 py-8 space-y-12">
         <div id="tiktok" class="bg-white dark:bg-gray-800 rounded-3xl p-6 sm:p-10 custom-shadow border border-gray-100 dark:border-gray-700 animate-slide-up">
             <h2 class="text-center text-2xl font-bold mb-8">Video Downloader <span class="text-indigo-500">All-in-One</span></h2>
             
@@ -52,9 +64,9 @@
                 <div class="flex gap-2">
                     <input type="url" id="videoUrl" placeholder="Tempel link TikTok, IG, FB, atau YT..." 
                         class="flex-1 px-4 py-4 rounded-2xl border-2 border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 outline-none focus:border-indigo-500 transition shadow-sm" required>
-                    <button type="button" id="pasteBtn" class="px-5 py-4 bg-gray-100 dark:bg-gray-700 rounded-2xl hover:bg-gray-200 transition" title="Paste Link">📋</button>
+                    <button type="button" id="pasteBtn" class="px-5 py-4 bg-gray-100 dark:bg-gray-700 rounded-2xl hover:bg-gray-200 transition">📋</button>
                 </div>
-                <button type="submit" id="downloadBtn" class="w-full py-5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-2xl hover:shadow-2xl hover:scale-[1.01] active:scale-95 transition-all">
+                <button type="submit" id="downloadBtn" class="w-full py-5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-2xl hover:shadow-2xl transition-all">
                     PROSES VIDEO
                 </button>
             </form>
@@ -64,24 +76,17 @@
                 <script async="async" data-cfasync="false" src="https://pl29331540.profitablecpmratenetwork.com/3870dd5ba23492d660d88ce310ec65e8/invoke.js"></script>
             </div>
 
-            <div id="resultArea" class="hidden mt-8 animate-fade-in bg-gray-50 dark:bg-gray-900/50 p-4 rounded-2xl border border-gray-100 dark:border-gray-800">
-                <div id="loadingState" class="hidden text-center py-6">
+            <div id="resultArea" class="hidden mt-8 animate-fade-in bg-gray-50 dark:bg-gray-900/50 p-4 rounded-2xl border border-gray-100 dark:border-gray-800 text-center">
+                <div id="loadingState" class="hidden py-6">
                     <div id="loadingSpinner" class="w-10 h-10 border-4 border-gray-200 rounded-full mx-auto mb-2"></div>
                     <p class="text-sm font-medium animate-pulse">Sedang mengambil video...</p>
                 </div>
-                
-                <div id="videoDisplay" class="hidden text-center space-y-6">
+                <div id="videoDisplay" class="hidden space-y-6">
                     <video id="previewVideo" controls class="shadow-2xl mx-auto bg-black"></video>
-                    
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <button id="btnDlVideo" class="py-4 bg-indigo-600 text-white font-bold rounded-xl shadow-lg hover:bg-indigo-700 active:scale-95 transition">
-                            SIMPAN VIDEO KE GALERI
-                        </button>
-                        <button id="btnDlAudio" class="py-4 bg-purple-600 text-white font-bold rounded-xl shadow-lg hover:bg-purple-700 active:scale-95 transition">
-                            SIMPAN MP3 (AUDIO)
-                        </button>
+                        <button id="btnDlVideo" class="py-4 bg-indigo-600 text-white font-bold rounded-xl shadow-lg hover:bg-indigo-700 transition">SIMPAN VIDEO KE GALERI</button>
+                        <button id="btnDlAudio" class="py-4 bg-purple-600 text-white font-bold rounded-xl shadow-lg hover:bg-purple-700 transition">SIMPAN MP3 (AUDIO)</button>
                     </div>
-                    <p class="text-[11px] text-gray-500 italic">Klik tombol di atas, video akan otomatis terunduh.</p>
                 </div>
             </div>
         </div>
@@ -91,12 +96,12 @@
             <div class="space-y-4 text-sm text-gray-600 dark:text-gray-400">
                 <p>1. Copy link video dari aplikasi (TikTok, IG, FB, YT).</p>
                 <p>2. Paste di kotak atas, klik <b>Proses Video</b>.</p>
-                <p>3. Klik tombol <b>Simpan Video</b>. Selesai!</p>
+                <p>3. Klik tombol <b>Simpan Video</b>. Video otomatis masuk galeri!</p>
             </div>
         </div>
     </main>
 
-    <footer class="py-12 text-center text-sm text-gray-400">
+    <footer class="py-12 text-center text-sm text-gray-400 border-t dark:border-gray-800">
         &copy; 2026 Konvert Cepat - Alan Project
     </footer>
 
@@ -110,24 +115,12 @@
         const loadingState = document.getElementById('loadingState');
         const videoDisplay = document.getElementById('videoDisplay');
         const previewVideo = document.getElementById('previewVideo');
-        
-        let vUrl = "";
-        let aUrl = "";
+        let vUrl = ""; let aUrl = "";
 
         document.getElementById('themeToggle').onclick = () => document.documentElement.classList.toggle('dark');
-
         document.getElementById('pasteBtn').onclick = async () => {
             const text = await navigator.clipboard.readText();
             videoUrl.value = text;
-        };
-
-        window.onload = () => {
-            const params = new URLSearchParams(window.location.search);
-            const linkBot = params.get('url');
-            if (linkBot) {
-                videoUrl.value = linkBot;
-                multiForm.dispatchEvent(new Event('submit'));
-            }
         };
 
         async function sikatDownload(fileUrl, fileName, btnId) {
@@ -135,23 +128,16 @@
             const textAsli = btn.innerText;
             try {
                 btn.innerText = "MENGUNDUH...";
-                btn.disabled = true;
                 const response = await fetch(fileUrl);
                 const blob = await response.blob();
                 const objUrl = window.URL.createObjectURL(blob);
                 const tagA = document.createElement('a');
-                tagA.href = objUrl;
-                tagA.download = fileName;
+                tagA.href = objUrl; tagA.download = fileName;
                 document.body.appendChild(tagA);
-                tagA.click();
-                tagA.remove();
+                tagA.click(); tagA.remove();
                 window.URL.revokeObjectURL(objUrl);
-            } catch (e) {
-                window.open(fileUrl, '_blank');
-            } finally {
-                btn.innerText = textAsli;
-                btn.disabled = false;
-            }
+            } catch (e) { window.open(fileUrl, '_blank'); }
+            finally { btn.innerText = textAsli; }
         }
 
         document.getElementById('btnDlVideo').onclick = () => sikatDownload(vUrl, 'Video_KonvertCepat.mp4', 'btnDlVideo');
@@ -174,16 +160,9 @@
                     previewVideo.src = vUrl;
                     loadingState.classList.add('hidden');
                     videoDisplay.classList.remove('hidden');
-                    videoDisplay.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                    alert('Gagal mengambil video. Link mungkin salah atau private.');
-                    resultArea.classList.add('hidden');
-                }
-            } catch (err) {
-                alert('Gangguan koneksi.');
-            } finally {
-                downloadBtn.disabled = false;
-            }
+                } else { alert('Gagal mengambil video. Link salah atau private.'); }
+            } catch (err) { alert('Gangguan koneksi.'); }
+            finally { downloadBtn.disabled = false; }
         };
     </script>
 </body>
