@@ -27,46 +27,34 @@
         .custom-shadow { box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.3); }
         #loadingSpinner { border-top-color: #6366f1; animation: spin 1s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
+        video { max-height: 480px; width: 100%; object-fit: contain; border-radius: 1rem; }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
 
     <header class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
-        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+        <nav class="max-w-7xl mx-auto px-4 h-16 flex justify-between items-center">
             <div class="flex items-center gap-2">
-                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold">A</div>
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-lg">A</div>
                 <span class="text-xl font-bold gradient-text">Konvert Cepat</span>
             </div>
-            <div class="hidden md:flex gap-6 text-sm font-medium">
-                <a href="#tiktok" class="hover:text-indigo-600">Video Downloader</a>
-                <a href="#removebg" class="hover:text-indigo-600">Hapus BG</a>
-                <a href="#tutorial" class="hover:text-indigo-600">Tutorial</a>
-            </div>
-            <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800">🌓</button>
+            <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:scale-110 transition">🌓</button>
         </nav>
     </header>
 
-    <section class="py-16 text-center px-4">
-        <div class="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 rounded-full text-xs font-medium mb-6 shadow-sm border dark:border-gray-700">
-            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> Online & Gratis
-        </div>
-        <h1 class="text-4xl sm:text-6xl font-extrabold mb-6 animate-slide-up">
-            Download Video & <span class="gradient-text">Hapus BG</span>
-        </h1>
-        <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">TikTok (No Watermark), Instagram, Facebook, & YouTube.</p>
-    </section>
-
-    <main class="max-w-4xl mx-auto px-4 space-y-12 pb-20">
+    <main class="max-w-4xl mx-auto px-4 py-12 space-y-12">
         
         <div id="tiktok" class="bg-white dark:bg-gray-800 rounded-3xl p-6 sm:p-10 custom-shadow border border-gray-100 dark:border-gray-700 animate-slide-up">
+            <h2 class="text-center text-2xl font-bold mb-8">Video Downloader <span class="text-indigo-500">All-in-One</span></h2>
+            
             <form id="multiForm" class="space-y-4">
                 <div class="flex gap-2">
-                    <input type="url" id="videoUrl" placeholder="Tempel link video di sini..." 
-                        class="flex-1 px-4 py-4 rounded-2xl border-2 border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 outline-none focus:border-indigo-500 transition" required>
-                    <button type="button" id="pasteBtn" class="px-5 py-4 bg-gray-100 dark:bg-gray-700 rounded-2xl" title="Paste Link">📋</button>
+                    <input type="url" id="videoUrl" placeholder="Tempel link TikTok, IG, FB, atau YT..." 
+                        class="flex-1 px-4 py-4 rounded-2xl border-2 border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 outline-none focus:border-indigo-500 transition shadow-sm" required>
+                    <button type="button" id="pasteBtn" class="px-5 py-4 bg-gray-100 dark:bg-gray-700 rounded-2xl hover:bg-gray-200 transition" title="Paste Link">📋</button>
                 </div>
-                <button type="submit" id="downloadBtn" class="w-full py-5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-2xl hover:shadow-xl transition-all">
-                    Download Sekarang
+                <button type="submit" id="downloadBtn" class="w-full py-5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-2xl hover:shadow-2xl hover:scale-[1.01] active:scale-95 transition-all">
+                    PROSES VIDEO
                 </button>
             </form>
 
@@ -75,71 +63,107 @@
                 <script async="async" data-cfasync="false" src="https://pl29331540.profitablecpmratenetwork.com/3870dd5ba23492d660d88ce310ec65e8/invoke.js"></script>
             </div>
 
-            <div id="resultArea" class="hidden mt-8 animate-fade-in">
+            <div id="resultArea" class="hidden mt-8 animate-fade-in bg-gray-50 dark:bg-gray-900/50 p-4 rounded-2xl border border-gray-100 dark:border-gray-800">
                 <div id="loadingState" class="hidden text-center py-6">
                     <div id="loadingSpinner" class="w-10 h-10 border-4 border-gray-200 rounded-full mx-auto mb-2"></div>
-                    <p class="text-sm">Menyiapkan video...</p>
+                    <p class="text-sm font-medium animate-pulse">Sedang mengambil video...</p>
                 </div>
-                <div id="videoDisplay" class="hidden">
-                    <video id="previewVideo" controls class="w-full rounded-2xl mb-4 bg-black shadow-lg"></video>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <a id="dlVideo" href="#" target="_blank" class="py-4 bg-indigo-600 text-white font-bold rounded-xl text-center shadow-lg">Download Video HD</a>
-                        <a id="dlAudio" href="#" target="_blank" class="py-4 bg-purple-600 text-white font-bold rounded-xl text-center">Download MP3</a>
+                
+                <div id="videoDisplay" class="hidden text-center space-y-6">
+                    <video id="previewVideo" controls class="shadow-2xl mx-auto bg-black"></video>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <button id="btnDlVideo" class="py-4 bg-indigo-600 text-white font-bold rounded-xl shadow-lg hover:bg-indigo-700 active:scale-95 transition">
+                            SIMPAN VIDEO KE GALERI
+                        </button>
+                        <button id="btnDlAudio" class="py-4 bg-purple-600 text-white font-bold rounded-xl shadow-lg hover:bg-purple-700 active:scale-95 transition">
+                            SIMPAN MP3 (AUDIO)
+                        </button>
                     </div>
+                    <p class="text-[11px] text-gray-500 italic">Klik tombol di atas, video akan otomatis terunduh.</p>
                 </div>
             </div>
         </div>
 
         <div id="tutorial" class="bg-white dark:bg-gray-800 rounded-3xl p-8 custom-shadow border border-gray-100 dark:border-gray-700">
-            <h2 class="text-2xl font-bold mb-6">Cara Menggunakan</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="space-y-2">
-                    <div class="w-10 h-10 bg-indigo-100 dark:bg-indigo-900 text-indigo-600 flex items-center justify-center rounded-full font-bold">1</div>
-                    <p class="font-semibold">Salin Link</p>
-                    <p class="text-sm text-gray-500">Buka TikTok, IG, FB, atau YT lalu klik Bagikan dan Salin Tautan.</p>
-                </div>
-                <div class="space-y-2">
-                    <div class="w-10 h-10 bg-indigo-100 dark:bg-indigo-900 text-indigo-600 flex items-center justify-center rounded-full font-bold">2</div>
-                    <p class="font-semibold">Tempel Link</p>
-                    <p class="text-sm text-gray-500">Tempel link pada kolom di atas dan klik tombol Download.</p>
-                </div>
-                <div class="space-y-2">
-                    <div class="w-10 h-10 bg-indigo-100 dark:bg-indigo-900 text-indigo-600 flex items-center justify-center rounded-full font-bold">3</div>
-                    <p class="font-semibold">Simpan Video</p>
-                    <p class="text-sm text-gray-500">Klik "Download Video HD" untuk menyimpan video ke galeri Anda.</p>
-                </div>
+            <h3 class="text-xl font-bold mb-6">Cara Pakai Konvert Cepat:</h3>
+            <div class="space-y-4 text-sm text-gray-600 dark:text-gray-400">
+                <p>1. Copy link video dari aplikasi (TikTok, IG, FB, YT).</p>
+                <p>2. Paste di kotak atas, klik <b>Proses Video</b>.</p>
+                <p>3. Klik tombol <b>Simpan Video</b>. Selesai!</p>
             </div>
         </div>
     </main>
 
-    <footer class="py-12 text-center text-sm text-gray-400 border-t border-gray-100 dark:border-gray-800">
-        &copy; 2026 Konvert Cepat. All rights reserved.
+    <footer class="py-12 text-center text-sm text-gray-400">
+        &copy; 2026 Konvert Cepat - Alan Project
     </footer>
 
     <script src="https://pl29331539.profitablecpmratenetwork.com/de/48/ad/de48adecd401f473c5c180796b5076eb.js"></script>
 
     <script>
-        // CORE LOGIC
         const multiForm = document.getElementById('multiForm');
         const videoUrl = document.getElementById('videoUrl');
         const downloadBtn = document.getElementById('downloadBtn');
         const resultArea = document.getElementById('resultArea');
         const loadingState = document.getElementById('loadingState');
         const videoDisplay = document.getElementById('videoDisplay');
+        const previewVideo = document.getElementById('previewVideo');
+        
+        let vUrl = "";
+        let aUrl = "";
 
-        // Theme Toggle
-        document.getElementById('themeToggle').addEventListener('click', () => {
-            document.documentElement.classList.toggle('dark');
-        });
+        // TEMA
+        document.getElementById('themeToggle').onclick = () => document.documentElement.classList.toggle('dark');
 
-        // Paste Feature
-        document.getElementById('pasteBtn').addEventListener('click', async () => {
+        // PASTE
+        document.getElementById('pasteBtn').onclick = async () => {
             const text = await navigator.clipboard.readText();
             videoUrl.value = text;
-        });
+        };
 
-        // Submit Action
-        multiForm.addEventListener('submit', async (e) => {
+        // BOT TELEGRAM AUTO-PROCESS
+        window.onload = () => {
+            const params = new URLSearchParams(window.location.search);
+            const linkBot = params.get('url');
+            if (linkBot) {
+                videoUrl.value = linkBot;
+                multiForm.dispatchEvent(new Event('submit'));
+            }
+        };
+
+        // SCRIPT PAKSA DOWNLOAD (Nggak perlu titik 3)
+        async function sikatDownload(fileUrl, fileName, btnId) {
+            const btn = document.getElementById(btnId);
+            const textAsli = btn.innerText;
+            try {
+                btn.innerText = "MENGUNDUH...";
+                btn.disabled = true;
+                
+                const response = await fetch(fileUrl);
+                const blob = await response.blob();
+                const objUrl = window.URL.createObjectURL(blob);
+                
+                const tagA = document.createElement('a');
+                tagA.href = objUrl;
+                tagA.download = fileName;
+                document.body.appendChild(tagA);
+                tagA.click();
+                tagA.remove();
+                window.URL.revokeObjectURL(objUrl);
+            } catch (e) {
+                window.open(fileUrl, '_blank');
+            } finally {
+                btn.innerText = textAsli;
+                btn.disabled = false;
+            }
+        }
+
+        document.getElementById('btnDlVideo').onclick = () => sikatDownload(vUrl, 'Video_KonvertCepat.mp4', 'btnDlVideo');
+        document.getElementById('btnDlAudio').onclick = () => sikatDownload(aUrl, 'Audio_KonvertCepat.mp3', 'btnDlAudio');
+
+        // SUBMIT FORM
+        multiForm.onsubmit = async (e) => {
             e.preventDefault();
             const url = videoUrl.value.trim();
             
@@ -147,33 +171,29 @@
             loadingState.classList.remove('hidden');
             videoDisplay.classList.add('hidden');
             downloadBtn.disabled = true;
-            downloadBtn.innerText = 'Sabar ya, lagi diproses...';
 
             try {
-                // Multi-API logic
                 const res = await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`);
                 const json = await res.json();
 
                 if (json.code === 0 && json.data) {
-                    const d = json.data;
-                    document.getElementById('previewVideo').src = d.play || d.url;
-                    document.getElementById('dlVideo').href = d.play || d.url;
-                    document.getElementById('dlAudio').href = d.music || "#";
+                    vUrl = json.data.play || json.data.url;
+                    aUrl = json.data.music || "";
+                    previewVideo.src = vUrl;
                     
                     loadingState.classList.add('hidden');
                     videoDisplay.classList.remove('hidden');
                     videoDisplay.scrollIntoView({ behavior: 'smooth' });
                 } else {
-                    alert('Video tidak ditemukan. Pastikan link publik.');
+                    alert('Gagal mengambil video. Link mungkin salah atau private.');
+                    resultArea.classList.add('hidden');
                 }
             } catch (err) {
-                alert('Gangguan jaringan.');
+                alert('Gangguan koneksi.');
             } finally {
                 downloadBtn.disabled = false;
-                downloadBtn.innerText = 'Download Sekarang';
-                loadingState.classList.add('hidden');
             }
-        });
+        };
     </script>
 </body>
 </html>
