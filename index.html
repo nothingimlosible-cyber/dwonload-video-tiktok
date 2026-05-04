@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Konvert Cepat - Multi Video Downloader & Remove BG</title>
     <meta name="description" content="Tool gratis download TikTok, IG, FB, YT tanpa watermark dan hapus background foto otomatis.">
+    
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -43,7 +46,7 @@
         </nav>
     </header>
 
-    <div class="max-w-7xl mx-auto px-4 mt-4 flex justify-center">
+    <div class="max-w-7xl mx-auto px-4 mt-6 flex justify-center">
         <div>
             <script>
                 atOptions = {
@@ -58,7 +61,7 @@
         </div>
     </div>
 
-    <main class="max-w-4xl mx-auto px-4 py-8 space-y-12 pb-20">
+    <main class="max-w-4xl mx-auto px-4 py-8 space-y-12 pb-24">
         <div id="tiktok" class="bg-white dark:bg-gray-800 rounded-3xl p-6 sm:p-10 custom-shadow border border-gray-100 dark:border-gray-700 animate-slide-up">
             <h2 class="text-center text-2xl font-bold mb-8">Video Downloader <span class="text-indigo-500">All-in-One</span></h2>
             
@@ -68,7 +71,7 @@
                         class="flex-1 px-4 py-4 rounded-2xl border-2 border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 outline-none focus:border-indigo-500 transition shadow-sm" required>
                     <button type="button" id="pasteBtn" class="px-5 py-4 bg-gray-100 dark:bg-gray-700 rounded-2xl hover:bg-gray-200 transition">📋</button>
                 </div>
-                <button type="submit" id="downloadBtn" class="w-full py-5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-2xl hover:shadow-2xl transition-all">
+                <button type="submit" id="downloadBtn" class="w-full py-5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-2xl hover:shadow-2xl transition-all active:scale-95">
                     PROSES VIDEO
                 </button>
             </form>
@@ -80,7 +83,7 @@
                 </div>
             </div>
 
-            <div id="resultArea" class="hidden mt-8 animate-fade-in bg-gray-50 dark:bg-gray-900/50 p-4 rounded-2xl border border-gray-100 dark:border-gray-800 text-center">
+            <div id="resultArea" class="hidden mt-8 animate-fade-in bg-gray-50 dark:bg-gray-900/50 p-4 rounded-2xl border border-gray-100 dark:border-gray-800 text-center text-center">
                 <div id="loadingState" class="hidden py-6">
                     <div id="loadingSpinner" class="w-10 h-10 border-4 border-gray-200 rounded-full mx-auto mb-2"></div>
                     <p class="text-sm font-medium animate-pulse">Sedang mengambil video...</p>
@@ -98,9 +101,10 @@
         <div id="tutorial" class="bg-white dark:bg-gray-800 rounded-3xl p-8 custom-shadow border border-gray-100 dark:border-gray-700">
             <h3 class="text-xl font-bold mb-6">Cara Pakai Konvert Cepat:</h3>
             <div class="space-y-4 text-sm text-gray-600 dark:text-gray-400">
-                <p>1. Copy link video dari aplikasi (TikTok, IG, FB, YT).</p>
-                <p>2. Paste di kotak atas, klik <b>Proses Video</b>.</p>
+                <p>1. Salin link video dari aplikasi (TikTok, IG, FB, YT).</p>
+                <p>2. Tempel di kotak atas, klik <b>Proses Video</b>.</p>
                 <p>3. Klik tombol <b>Simpan Video</b>. Video otomatis masuk galeri!</p>
+                <p class="mt-4 text-xs italic text-indigo-500">*Jika di Telegram download tidak jalan, klik titik tiga di pojok kanan atas lalu pilih "Open in Browser".</p>
             </div>
         </div>
     </main>
@@ -121,13 +125,18 @@
         const previewVideo = document.getElementById('previewVideo');
         let vUrl = ""; let aUrl = "";
 
+        // TEMA
         document.getElementById('themeToggle').onclick = () => document.documentElement.classList.toggle('dark');
+        
+        // PASTE
         document.getElementById('pasteBtn').onclick = async () => {
-            const text = await navigator.clipboard.readText();
-            videoUrl.value = text;
+            try {
+                const text = await navigator.clipboard.readText();
+                videoUrl.value = text;
+            } catch(e) { alert("Izinkan akses clipboard ya!"); }
         };
 
-        // Otomatis proses link dari bot
+        // AUTO-PROCESS DARI BOT TELEGRAM
         window.onload = () => {
             const params = new URLSearchParams(window.location.search);
             if (params.get('url')) {
@@ -136,6 +145,7 @@
             }
         };
 
+        // SCRIPT DOWNLOAD SAKTI (ANTI TITIK 3 + SOLUSI TELEGRAM)
         async function sikatDownload(fileUrl, fileName, btnId) {
             const btn = document.getElementById(btnId);
             const textAsli = btn.innerText;
@@ -149,13 +159,17 @@
                 document.body.appendChild(tagA);
                 tagA.click(); tagA.remove();
                 window.URL.revokeObjectURL(objUrl);
-            } catch (e) { window.open(fileUrl, '_blank'); }
+            } catch (e) { 
+                // Jika di Telegram/Mobile gagal paksa download, kita lempar ke link asli
+                window.location.href = fileUrl; 
+            }
             finally { btn.innerText = textAsli; }
         }
 
         document.getElementById('btnDlVideo').onclick = () => sikatDownload(vUrl, 'Video_KonvertCepat.mp4', 'btnDlVideo');
         document.getElementById('btnDlAudio').onclick = () => sikatDownload(aUrl, 'Audio_KonvertCepat.mp3', 'btnDlAudio');
 
+        // PROSES FORM
         multiForm.onsubmit = async (e) => {
             e.preventDefault();
             const url = videoUrl.value.trim();
@@ -165,6 +179,7 @@
             downloadBtn.disabled = true;
 
             try {
+                // API TikWM (Update ke API publik yang lebih luas)
                 const res = await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`);
                 const json = await res.json();
                 if (json.code === 0 && json.data) {
@@ -173,7 +188,8 @@
                     previewVideo.src = vUrl;
                     loadingState.classList.add('hidden');
                     videoDisplay.classList.remove('hidden');
-                } else { alert('Gagal mengambil video. Link salah atau private.'); }
+                    videoDisplay.scrollIntoView({ behavior: 'smooth' });
+                } else { alert('Gagal mengambil video. Link mungkin salah atau private.'); }
             } catch (err) { alert('Gangguan koneksi.'); }
             finally { downloadBtn.disabled = false; }
         };
