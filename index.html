@@ -1,258 +1,179 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Konvert Cepat - Konversi Gambar, Download TikTok, Hapus Background Online</title>
-<meta name="description" content="Konvert Cepat adalah tool online gratis untuk konversi format gambar JPG, PNG, WebP, download video TikTok tanpa watermark, dan hapus background foto otomatis.">
-<meta property="og:url" content="https://dwonload-video-tiktok.vercel.app">
-<link rel="canonical" href="https://dwonload-video-tiktok.vercel.app">
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-    *{font-family:'Inter',sans-serif}html{scroll-behavior:smooth}
-   .gradient-bg{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%)}
-   .gradient-text{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-   .glass-effect{background:rgba(255,255,255,.95);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-   .tab-active{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);color:white}
-   .upload-area{border:2px dashed #cbd5e1;transition:all.3s ease}
-   .upload-area:hover,.upload-area.dragover{border-color:#667eea;background-color:#f8fafc}
-   .btn-gradient{background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);transition:all.3s ease}
-   .btn-gradient:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(102,126,234,.4)}
-   .page-section{display:none;animation:fadeIn.4s ease}.page-section.active{display:block}
-    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-   .ad-container{min-height:250px;display:flex;align-items:center;justify-content:center;background:#f8fafc;border-radius:12px;overflow:hidden;margin:1rem 0}
-    @media(max-width:768px){.ad-container{min-height:100px}}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konvert Cepat - Multi Video Downloader & Remove BG</title>
+    <meta name="description" content="Tool gratis download TikTok, IG, FB, YT tanpa watermark dan hapus background foto otomatis.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    animation: { 'fade-in': 'fadeIn 0.5s ease-in-out', 'slide-up': 'slideUp 0.4s ease-out' },
+                    keyframes: {
+                        fadeIn: { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
+                        slideUp: { '0%': { transform: 'translateY(20px)', opacity: '0' }, '100%': { transform: 'translateY(0)', opacity: '1' } }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text { background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .custom-shadow { box-shadow: 0 10px 40px -10px rgba(99, 102, 241, 0.3); }
+        #loadingSpinner { border-top-color: #6366f1; animation: spin 1s linear infinite; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+    </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
 
-<!-- Adsterra Social Bar -->
-<script type='text/javascript' src='//pl27700000.profitableratecpm.com/12/34/56/social-bar-script.js'></script>
-
-<header class="glass-effect sticky top-0 z-50 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center py-4">
-            <div class="flex items-center space-x-2 cursor-pointer" onclick="showPage('home')">
-                <div class="text-3xl">⚡</div>
-                <h1 class="text-2xl font-bold gradient-text">Konvert Cepat</h1>
+    <header class="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800">
+        <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold">A</div>
+                <span class="text-xl font-bold gradient-text">Konvert Cepat</span>
             </div>
-            <nav class="hidden md:flex items-center space-x-8">
-                <a href="#tools" onclick="showPage('home')" class="text-gray-600 hover:text-purple-600 font-medium transition">Tools</a>
-                <a href="#" onclick="showPage('about')" class="text-gray-600 hover:text-purple-600 font-medium transition">Tentang</a>
-                <a href="#" onclick="showPage('contact')" class="text-gray-600 hover:text-purple-600 font-medium transition">Kontak</a>
-                <a href="#" onclick="showPage('privacy')" class="text-gray-600 hover:text-purple-600 font-medium transition">Privasi</a>
-            </nav>
-            <button onclick="toggleMobileMenu()" class="md:hidden text-gray-600 focus:outline-none"><i id="menuIcon" class="fas fa-bars text-2xl"></i></button>
+            <div class="hidden md:flex gap-6 text-sm font-medium">
+                <a href="#tiktok" class="hover:text-indigo-600">Video Downloader</a>
+                <a href="#removebg" class="hover:text-indigo-600">Hapus BG</a>
+                <a href="#tutorial" class="hover:text-indigo-600">Tutorial</a>
+            </div>
+            <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800">🌓</button>
+        </nav>
+    </header>
+
+    <section class="py-16 text-center px-4">
+        <div class="inline-flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 rounded-full text-xs font-medium mb-6 shadow-sm border dark:border-gray-700">
+            <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span> Online & Gratis
         </div>
-        <div id="mobileMenu" class="hidden md:hidden pb-4">
-            <a href="#tools" onclick="showPage('home');toggleMobileMenu()" class="block py-2 text-gray-600 hover:text-purple-600 font-medium">Tools</a>
-            <a href="#" onclick="showPage('about');toggleMobileMenu()" class="block py-2 text-gray-600 hover:text-purple-600 font-medium">Tentang</a>
-            <a href="#" onclick="showPage('contact');toggleMobileMenu()" class="block py-2 text-gray-600 hover:text-purple-600 font-medium">Kontak</a>
-            <a href="#" onclick="showPage('privacy');toggleMobileMenu()" class="block py-2 text-gray-600 hover:text-purple-600 font-medium">Privasi</a>
-        </div>
-    </div>
-</header>
-
-<main class="min-h-screen">
-    <section id="home" class="page-section active">
-        <div class="gradient-bg text-white py-16 md:py-24">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold mb-6 leading-tight">Tool Serba Bisa untuk<br>Kebutuhan Digital Anda</h2>
-                <p class="text-lg md:text-xl text-purple-100 mb-8 max-w-3xl mx-auto">Konversi gambar, download video TikTok tanpa watermark, dan hapus background foto. Semua gratis, cepat, dan tanpa perlu install aplikasi.</p>
-                <a href="#tools" class="inline-block bg-white text-purple-600 px-8 py-4 rounded-xl font-bold text-lg shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300">Mulai Sekarang <i class="fas fa-arrow-down ml-2"></i></a>
-            </div>
-        </div>
-
-        <div id="tools" class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-            <div class="text-center mb-12">
-                <h3 class="text-3xl md:text-4xl font-bold mb-4">Pilih Tool yang Anda Butuhkan</h3>
-                <p class="text-gray-600 text-lg">Semua proses dilakukan di browser Anda. Aman dan privasi terjaga.</p>
-            </div>
-
-            <div class="flex flex-wrap justify-center gap-3 mb-8">
-                <button onclick="switchTab('convert')" id="tab-convert" class="tab-btn tab-active px-6 py-3 rounded-xl font-semibold transition-all"><i class="fas fa-exchange-alt mr-2"></i>Konversi Gambar</button>
-                <button onclick="switchTab('tiktok')" id="tab-tiktok" class="tab-btn bg-white px-6 py-3 rounded-xl font-semibold text-gray-700 shadow-md hover:shadow-lg transition-all"><i class="fab fa-tiktok mr-2"></i>Download TikTok</button>
-                <button onclick="switchTab('removebg')" id="tab-removebg" class="tab-btn bg-white px-6 py-3 rounded-xl font-semibold text-gray-700 shadow-md hover:shadow-lg transition-all"><i class="fas fa-cut mr-2"></i>Hapus Background</button>
-            </div>
-
-            <div class="bg-white rounded-2xl shadow-xl p-6 md:p-8 lg:p-10">
-                <!-- Convert Tab -->
-                <div id="content-convert" class="tool-content">
-                    <h4 class="text-2xl font-bold mb-2">Konversi Format Gambar</h4>
-                    <p class="text-gray-600 mb-6">Ubah JPG ke PNG, PNG ke WebP, WebP ke JPG, dan lainnya dengan kualitas terbaik.</p>
-                    <div class="upload-area rounded-xl p-8 text-center cursor-pointer mb-6" id="convertDropzone">
-                        <input type="file" id="convertInput" accept="image/*" class="hidden">
-                        <i class="fas fa-cloud-upload-alt text-5xl text-gray-400 mb-4"></i>
-                        <p class="text-lg font-semibold mb-2">Klik atau seret gambar ke sini</p>
-                        <p class="text-sm text-gray-500">Mendukung JPG, PNG, WebP, GIF, BMP</p>
-                    </div>
-                    <div id="convertPreview" class="hidden">
-                        <div class="grid md:grid-cols-2 gap-6 mb-6">
-                            <div>
-                                <p class="font-semibold mb-2">Preview:</p>
-                                <img id="convertImg" class="w-full rounded-lg shadow-md max-h-64 object-contain bg-gray-50">
-                                <p id="convertInfo" class="text-sm text-gray-500 mt-2"></p>
-                            </div>
-                            <div>
-                                <label class="font-semibold mb-2 block">Pilih Format Output:</label>
-                                <select id="convertFormat" class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-purple-500 focus:outline-none mb-4">
-                                    <option value="png">PNG - Kualitas terbaik, transparan</option>
-                                    <option value="jpeg">JPG - Ukuran kecil, foto</option>
-                                    <option value="webp">WebP - Modern, kompresi tinggi</option>
-                                </select>
-                                <div id="qualityControl" class="mb-4">
-                                    <label class="font-semibold mb-2 block">Kualitas: <span id="qualityVal">90</span>%</label>
-                                    <input type="range" id="qualityRange" min="10" max="100" value="90" class="w-full">
-                                </div>
-                                <button onclick="processConvert()" class="btn-gradient w-full text-white py-3 rounded-lg font-bold"><i class="fas fa-sync-alt mr-2"></i>Konversi Sekarang</button>
-                            </div>
-                        <div id="convertResult"></div>
-                    </div>
-                </div>
-
-                <!-- TikTok Tab -->
-                <div id="content-tiktok" class="tool-content hidden">
-                    <h4 class="text-2xl font-bold mb-2">Download Video TikTok</h4>
-                    <p class="text-gray-600 mb-6">Download video TikTok tanpa watermark. Gratis dan unlimited.</p>
-                    <div class="flex flex-col md:flex-row gap-3 mb-4">
-                        <input type="text" id="tiktokUrl" placeholder="Tempel link video TikTok di sini..." class="flex-1 px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-purple-500 focus:outline-none">
-                        <button onclick="downloadTikTok()" class="btn-gradient text-white px-8 py-3 rounded-lg font-bold whitespace-nowrap"><i class="fas fa-download mr-2"></i>Download</button>
-                    </div>
-                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded mb-6">
-                        <p class="text-sm text-blue-800"><i class="fas fa-info-circle mr-2"></i><strong>Cara:</strong> Buka TikTok > Bagikan > Salin Tautan > Tempel di atas</p>
-                    </div>
-                    <div id="tiktokResult"></div>
-                </div>
-
-                <!-- Remove BG Tab -->
-                <div id="content-removebg" class="tool-content hidden">
-                    <h4 class="text-2xl font-bold mb-2">Hapus Background Otomatis</h4>
-                    <p class="text-gray-600 mb-6">Hapus latar belakang foto Anda secara otomatis dengan AI. Cocok untuk pas foto, produk, dll.</p>
-                    <div class="upload-area rounded-xl p-8 text-center cursor-pointer mb-6" id="bgDropzone">
-                        <input type="file" id="bgInput" accept="image/*" class="hidden">
-                        <i class="fas fa-image text-5xl text-gray-400 mb-4"></i>
-                        <p class="text-lg font-semibold mb-2">Upload Foto Anda</p>
-                        <p class="text-sm text-gray-500">Hasil terbaik untuk foto orang, produk, objek tunggal</p>
-                    </div>
-                    <div id="bgPreview" class="hidden">
-                        <div class="grid md:grid-cols-2 gap-6 mb-6">
-                            <div>
-                                <p class="font-semibold mb-2">Foto Asli:</p>
-                                <img id="bgImgOriginal" class="w-full rounded-lg shadow-md max-h-80 object-contain bg-gray-50">
-                            </div>
-                            <div>
-                                <p class="font-semibold mb-2">Hasil Tanpa Background:</p>
-                                <div id="bgLoading" class="w-full h-80 bg-gray-100 rounded-lg flex items-center justify-center">
-                                    <div class="text-center">
-                                        <i class="fas fa-spinner fa-spin text-4xl text-purple-600 mb-3"></i>
-                                        <p class="text-gray-600">Memproses dengan AI...</p>
-                                        <p class="text-xs text-gray-500 mt-2">Pertama kali agak lama 5-10 detik</p>
-                                    </div>
-                                </div>
-                                <img id="bgImgResult" class="w-full rounded-lg shadow-md max-h-80 object-contain bg-gray-50 hidden" style="background-image:url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAMUlEQVQ4T2NkYGAQYcAP3uCTZ04QPWJAdFCBdFCBVGAUNIuRkQRGShW4BSSGXhcAABxOIvMCFZNiAAAAAElFTkSuQmCC');background-size:20px 20px;">
-                            </div>
-                        </div>
-                        <div id="bgResult"></div>
-                    </div>
-                    <div class="bg-amber-50 border-l-4 border-amber-500 p-4 rounded">
-                        <p class="text-sm text-amber-800"><i class="fas fa-lightbulb mr-2"></i><strong>Tips:</strong> Untuk hasil terbaik, gunakan foto dengan objek yang jelas dan kontras dengan background.</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Native Bar Ad -->
-            <div class="ad-container mt-8">
-                <script async="async" data-cfasync="false" src="//pl27700000.profitableratecpm.com/12/34/56/invoke.js"></script>
-                <div id="container-12-34-56"></div>
-            </div>
-
-            <!-- 300x250 Banner Ad -->
-            <div class="ad-container">
-                <script type="text/javascript">
-                    atOptions = {'key':'your-adsterra-key-300x250','format':'iframe','height':250,'width':300,'params':{}};
-                </script>
-                <script type="text/javascript" src="//www.topcreativeformat.com/your-adsterra-key-300x250/invoke.js"></script>
-            </div>
-        </div>
+        <h1 class="text-4xl sm:text-6xl font-extrabold mb-6 animate-slide-up">
+            Download Video & <span class="gradient-text">Hapus BG</span>
+        </h1>
+        <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">TikTok (No Watermark), Instagram, Facebook, & YouTube.</p>
     </section>
 
-    <!-- About, Contact, Privacy, Terms - singkat -->
-    <section id="about" class="page-section max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h2 class="text-4xl font-bold mb-6 gradient-text">Tentang Konvert Cepat</h2>
-        <div class="bg-white rounded-2xl shadow-lg p-8 prose-lg max-w-none">
-            <p>Konvert Cepat adalah platform tool online gratis untuk konversi gambar, download TikTok tanpa watermark, dan hapus background foto. Semua proses di browser Anda, privasi aman.</p>
-        </div>
-    </section>
-
-    <section id="contact" class="page-section max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h2 class="text-4xl font-bold mb-6 gradient-text">Hubungi Kami</h2>
-        <div class="bg-white rounded-2xl shadow-lg p-8">
-            <p class="text-gray-600 mb-8">Email: support@konvertcepat.com</p>
-            <form onsubmit="submitContact(event)" class="space-y-6">
-                <div><label class="block font-semibold mb-2">Nama</label><input type="text" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-purple-500 focus:outline-none"></div>
-                <div><label class="block font-semibold mb-2">Email</label><input type="email" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-purple-500 focus:outline-none"></div>
-                <div><label class="block font-semibold mb-2">Pesan</label><textarea rows="5" required class="w-full px-4 py-3 rounded-lg border-2 border-gray-200 focus:border-purple-500 focus:outline-none"></textarea></div>
-                <button type="submit" class="btn-gradient text-white px-8 py-3 rounded-lg font-bold"><i class="fas fa-paper-plane mr-2"></i>Kirim Pesan</button>
+    <main class="max-w-4xl mx-auto px-4 space-y-12 pb-20">
+        
+        <div id="tiktok" class="bg-white dark:bg-gray-800 rounded-3xl p-6 sm:p-10 custom-shadow border border-gray-100 dark:border-gray-700 animate-slide-up">
+            <form id="multiForm" class="space-y-4">
+                <div class="flex gap-2">
+                    <input type="url" id="videoUrl" placeholder="Tempel link video di sini..." 
+                        class="flex-1 px-4 py-4 rounded-2xl border-2 border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 outline-none focus:border-indigo-500 transition" required>
+                    <button type="button" id="pasteBtn" class="px-5 py-4 bg-gray-100 dark:bg-gray-700 rounded-2xl" title="Paste Link">📋</button>
+                </div>
+                <button type="submit" id="downloadBtn" class="w-full py-5 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-2xl hover:shadow-xl transition-all">
+                    Download Sekarang
+                </button>
             </form>
-            <div id="contactMsg" class="mt-4"></div>
+
+            <div class="mt-8 pt-8 border-t border-dashed border-gray-200 dark:border-gray-700 flex justify-center">
+                <div id="container-3870dd5ba23492d660d88ce310ec65e8"></div>
+                <script async="async" data-cfasync="false" src="https://pl29331540.profitablecpmratenetwork.com/3870dd5ba23492d660d88ce310ec65e8/invoke.js"></script>
+            </div>
+
+            <div id="resultArea" class="hidden mt-8 animate-fade-in">
+                <div id="loadingState" class="hidden text-center py-6">
+                    <div id="loadingSpinner" class="w-10 h-10 border-4 border-gray-200 rounded-full mx-auto mb-2"></div>
+                    <p class="text-sm">Menyiapkan video...</p>
+                </div>
+                <div id="videoDisplay" class="hidden">
+                    <video id="previewVideo" controls class="w-full rounded-2xl mb-4 bg-black shadow-lg"></video>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <a id="dlVideo" href="#" target="_blank" class="py-4 bg-indigo-600 text-white font-bold rounded-xl text-center shadow-lg">Download Video HD</a>
+                        <a id="dlAudio" href="#" target="_blank" class="py-4 bg-purple-600 text-white font-bold rounded-xl text-center">Download MP3</a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </section>
 
-    <section id="privacy" class="page-section max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h2 class="text-4xl font-bold mb-6 gradient-text">Kebijakan Privasi</h2>
-        <div class="bg-white rounded-2xl shadow-lg p-8 prose prose-lg max-w-none">
-            <p>Kami tidak menyimpan file Anda. Semua proses konversi dan hapus background dilakukan di browser. Kami menggunakan cookie untuk iklan Adsterra.</p>
+        <div id="tutorial" class="bg-white dark:bg-gray-800 rounded-3xl p-8 custom-shadow border border-gray-100 dark:border-gray-700">
+            <h2 class="text-2xl font-bold mb-6">Cara Menggunakan</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="space-y-2">
+                    <div class="w-10 h-10 bg-indigo-100 dark:bg-indigo-900 text-indigo-600 flex items-center justify-center rounded-full font-bold">1</div>
+                    <p class="font-semibold">Salin Link</p>
+                    <p class="text-sm text-gray-500">Buka TikTok, IG, FB, atau YT lalu klik Bagikan dan Salin Tautan.</p>
+                </div>
+                <div class="space-y-2">
+                    <div class="w-10 h-10 bg-indigo-100 dark:bg-indigo-900 text-indigo-600 flex items-center justify-center rounded-full font-bold">2</div>
+                    <p class="font-semibold">Tempel Link</p>
+                    <p class="text-sm text-gray-500">Tempel link pada kolom di atas dan klik tombol Download.</p>
+                </div>
+                <div class="space-y-2">
+                    <div class="w-10 h-10 bg-indigo-100 dark:bg-indigo-900 text-indigo-600 flex items-center justify-center rounded-full font-bold">3</div>
+                    <p class="font-semibold">Simpan Video</p>
+                    <p class="text-sm text-gray-500">Klik "Download Video HD" untuk menyimpan video ke galeri Anda.</p>
+                </div>
+            </div>
         </div>
-    </section>
+    </main>
 
-    <section id="terms" class="page-section max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <h2 class="text-4xl font-bold mb-6 gradient-text">Syarat & Ketentuan</h2>
-        <div class="bg-white rounded-2xl shadow-lg p-8 prose prose-lg max-w-none">
-            <p>Dengan menggunakan Konvert Cepat, Anda setuju menggunakan layanan hanya untuk tujuan yang sah. Kami tidak bertanggung jawab atas penyalahgunaan konten.</p>
-        </div>
-    </section>
-</main>
+    <footer class="py-12 text-center text-sm text-gray-400 border-t border-gray-100 dark:border-gray-800">
+        &copy; 2026 Konvert Cepat. All rights reserved.
+    </footer>
 
-<footer class="bg-gray-900 text-gray-300 py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="grid md:grid-cols-4 gap-8 mb-8">
-            <div><div class="flex items-center space-x-2 mb-4"><div class="text-3xl">⚡</div><h3 class="text-xl font-bold text-white">Konvert Cepat</h3></div><p class="text-sm text-gray-400">Tool online gratis untuk konversi gambar, download TikTok, dan hapus background.</p></div>
-            <div><h4 class="font-bold text-white mb-4">Tools</h4><ul class="space-y-2 text-sm"><li><a href="#tools" onclick="showPage('home');switchTab('convert')" class="hover:text-white transition">Konversi Gambar</a></li><li><a href="#tools" onclick="showPage('home');switchTab('tiktok')" class="hover:text-white transition">Download TikTok</a></li><li><a href="#tools" onclick="showPage('home');switchTab('removebg')" class="hover:text-white transition">Hapus Background</a></li></ul></div>
-            <div><h4 class="font-bold text-white mb-4">Perusahaan</h4><ul class="space-y-2 text-sm"><li><a href="#" onclick="showPage('about')" class="hover:text-white transition">Tentang Kami</a></li><li><a href="#" onclick="showPage('contact')" class="hover:text-white transition">Kontak</a></li><li><a href="#" onclick="showPage('privacy')" class="hover:text-white transition">Kebijakan Privasi</a></li><li><a href="#" onclick="showPage('terms')" class="hover:text-white transition">Syarat & Ketentuan</a></li></ul></div>
-            <div><h4 class="font-bold text-white mb-4">Ikuti Kami</h4><div class="flex space-x-4"><a href="#" class="text-2xl hover:text-white transition"><i class="fab fa-tiktok"></i></a><a href="#" class="text-2xl hover:text-white transition"><i class="fab fa-instagram"></i></a><a href="#" class="text-2xl hover:text-white transition"><i class="fab fa-twitter"></i></a></div></div>
-        </div>
-        <div class="border-t border-gray-800 pt-8 text-center text-sm text-gray-500">
-            <p>&copy; 1% Konvert Cepat. All rights reserved. Dibuat dengan ❤️ untuk Indonesia.</p>
-        </div>
-    </div>
-</footer>
+    <script src="https://pl29331539.profitablecpmratenetwork.com/de/48/ad/de48adecd401f473c5c180796b5076eb.js"></script>
 
-<script type="module">
-import {removeBackground} from 'https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.4.5/+esm';
+    <script>
+        // CORE LOGIC
+        const multiForm = document.getElementById('multiForm');
+        const videoUrl = document.getElementById('videoUrl');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const resultArea = document.getElementById('resultArea');
+        const loadingState = document.getElementById('loadingState');
+        const videoDisplay = document.getElementById('videoDisplay');
 
-window.showPage=p=>{document.querySelectorAll('.page-section').forEach(s=>s.classList.remove('active'));document.getElementById(p).classList.add('active');window.scrollTo({top:0,behavior:'smooth'})}
-window.toggleMobileMenu=()=>{const m=document.getElementById('mobileMenu'),i=document.getElementById('menuIcon');m.classList.toggle('hidden');i.classList.toggle('fa-bars');i.classList.toggle('fa-times')}
-window.switchTab=t=>{document.querySelectorAll('.tab-btn').forEach(b=>{b.classList.remove('tab-active');b.classList.add('bg-white','text-gray-700','shadow-md')});document.getElementById('tab-'+t).classList.add('tab-active');document.getElementById('tab-'+t).classList.remove('bg-white','text-gray-700','shadow-md');document.querySelectorAll('.tool-content').forEach(c=>c.classList.add('hidden'));document.getElementById('content-'+t).classList.remove('hidden')}
+        // Theme Toggle
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
 
-// Convert
-const cD=document.getElementById('convertDropzone'),cI=document.getElementById('convertInput'),cP=document.getElementById('convertPreview'),cImg=document.getElementById('convertImg'),cInfo=document.getElementById('convertInfo'),cF=document.getElementById('convertFormat'),qC=document.getElementById('qualityControl'),qR=document.getElementById('qualityRange'),qV=document.getElementById('qualityVal');let cFile=null;
-cD.addEventListener('click',()=>cI.click());cD.addEventListener('dragover',e=>{e.preventDefault();cD.classList.add('dragover')});cD.addEventListener('dragleave',()=>cD.classList.remove('dragover'));cD.addEventListener('drop',e=>{e.preventDefault();cD.classList.remove('dragover');if(e.dataTransfer.files.length)hCF(e.dataTransfer.files[0])});cI.addEventListener('change',e=>{if(e.target.files.length)hCF(e.target.files[0])});
-function hCF(f){if(!f.type.startsWith('image/')){alert('File harus berupa gambar!');return}cFile=f;const r=new FileReader();r.onload=e=>{cImg.src=e.target.result;cInfo.textContent=`${f.name} - ${(f.size/1024).toFixed(2)} KB`;cP.classList.remove('hidden')};r.readAsDataURL(f)}
-cF.addEventListener('change',()=>{qC.style.display=cF.value==='png'?'none':'block'});qR.addEventListener('input',()=>qV.textContent=qR.value);
-window.processConvert=()=>{if(!cFile)return;const c=document.createElement('canvas'),x=c.getContext('2d'),i=new Image();i.onload=()=>{c.width=i.width;c.height=i.height;x.drawImage(i,0,0);const f=cF.value,q=qR.value/100,m=f==='jpeg'?'image/jpeg':`image/${f}`;c.toBlob(b=>{const u=URL.createObjectURL(b),s=(b.size/1024).toFixed(2);document.getElementById('convertResult').innerHTML=`<div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-lg"><p class="font-semibold text-green-800 mb-3"><i class="fas fa-check-circle mr-2"></i>Konversi Berhasil!</p><p class="text-sm text-gray-600 mb-3">Ukuran baru: ${s} KB</p><a href="${u}" download="converted.${f}" class="inline-block btn-gradient text-white px-6 py-2 rounded-lg font-bold"><i class="fas fa-download mr-2"></i>Download Hasil</a></div>`},m,q)};i.src=URL.createObjectURL(cFile)}
+        // Paste Feature
+        document.getElementById('pasteBtn').addEventListener('click', async () => {
+            const text = await navigator.clipboard.readText();
+            videoUrl.value = text;
+        });
 
-// TikTok
-window.downloadTikTok=async()=>{const u=document.getElementById('tiktokUrl').value.trim(),r=document.getElementById('tiktokResult');if(!u){alert('Masukkan URL TikTok!');return}if(!u.includes('tiktok.com')){r.innerHTML=`<div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg"><p class="text-red-800"><i class="fas fa-exclamation-circle mr-2"></i>URL tidak valid.</p></div>`;return}r.innerHTML=`<div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg"><p class="text-blue-800"><i class="fas fa-spinner fa-spin mr-2"></i>Memproses video...</p></div>`;try{const a=`https://api.tikwm.com/?url=${encodeURIComponent(u)}`,d=await(await fetch(a)).json();if(d.code===0&&d.data){const v=d.data;r.innerHTML=`<div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-lg"><p class="font-semibold text-green-800 mb-3"><i class="fas fa-check-circle mr-2"></i>Video Berhasil Ditemukan!</p><video controls class="w-full rounded-lg mb-3" src="${v.play}"></video><p class="text-sm text-gray-600 mb-3">@${v.author.unique_id} - ${v.title}</p><a href="${v.play}" download="tiktok_no_watermark.mp4" class="inline-block btn-gradient text-white px-6 py-2 rounded-lg font-bold mr-2"><i class="fas fa-download mr-2"></i>Download Video</a><a href="${v.music}" download="tiktok_audio.mp3" class="inline-block bg-gray-600 text-white px-6 py-2 rounded-lg font-bold"><i class="fas fa-music mr-2"></i>Download Audio</a></div>`}else throw 0}catch{r.innerHTML=`<div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg"><p class="text-red-800"><i class="fas fa-exclamation-circle mr-2"></i>Gagal download. Coba lagi atau pastikan link benar.</p></div>`}}
+        // Submit Action
+        multiForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const url = videoUrl.value.trim();
+            
+            resultArea.classList.remove('hidden');
+            loadingState.classList.remove('hidden');
+            videoDisplay.classList.add('hidden');
+            downloadBtn.disabled = true;
+            downloadBtn.innerText = 'Sabar ya, lagi diproses...';
 
-// Remove BG
-const bD=document.getElementById('bgDropzone'),bI=document.getElementById('bgInput'),bP=document.getElementById('bgPreview'),bO=document.getElementById('bgImgOriginal'),bR=document.getElementById('bgImgResult'),bL=document.getElementById('bgLoading');
-bD.addEventListener('click',()=>bI.click());bD.addEventListener('dragover',e=>{e.preventDefault();bD.classList.add('dragover')});bD.addEventListener('dragleave',()=>bD.classList.remove('dragover'));bD.addEventListener('drop',e=>{e.preventDefault();bD.classList.remove('dragover');if(e.dataTransfer.files.length)hBF(e.dataTransfer.files[0])});bI.addEventListener('change',e=>{if(e.target.files.length)hBF(e.target.files[0])});
-async function hBF(f){if(!f.type.startsWith('image/')){alert('File harus berupa gambar!');return}const r=new FileReader();r.onload=async e=>{bO.src=e.target.result;bP.classList.remove('hidden');bR.classList.add('hidden');bL.classList.remove('hidden');try{const b=await removeBackground(f),u=URL.createObjectURL(b);bL.classList.add('hidden');bR.classList.remove('hidden');bR.src=u;document.getElementById('bgResult').innerHTML=`<div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-lg"><p class="font-semibold text-green-800 mb-3"><i class="fas fa-check-circle mr-2"></i>Background Berhasil Dihapus!</p><a href="${u}" download="no-background.png" class="inline-block btn-gradient text-white px-6 py-2 rounded-lg font-bold"><i class="fas fa-download mr-2"></i>Download PNG Transparan</a></div>`}catch{ bL.innerHTML=`<div class="text-center"><i class="fas fa-times-circle text-4xl text-red-600 mb-3"></i><p class="text-gray-600">Gagal proses. Coba foto lain.</p></div>`}};r.readAsDataURL(f)}
+            try {
+                // Multi-API logic
+                const res = await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`);
+                const json = await res.json();
 
-window.submitContact=e=>{e.preventDefault();document.getElementById('contactMsg').innerHTML=`<div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-lg"><p class="text-green-800"><i class="fas fa-check-circle mr-2"></i>Pesan Anda telah terkirim!</p></div>`;e.target.reset()}
-</script>
+                if (json.code === 0 && json.data) {
+                    const d = json.data;
+                    document.getElementById('previewVideo').src = d.play || d.url;
+                    document.getElementById('dlVideo').href = d.play || d.url;
+                    document.getElementById('dlAudio').href = d.music || "#";
+                    
+                    loadingState.classList.add('hidden');
+                    videoDisplay.classList.remove('hidden');
+                    videoDisplay.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    alert('Video tidak ditemukan. Pastikan link publik.');
+                }
+            } catch (err) {
+                alert('Gangguan jaringan.');
+            } finally {
+                downloadBtn.disabled = false;
+                downloadBtn.innerText = 'Download Sekarang';
+                loadingState.classList.add('hidden');
+            }
+        });
+    </script>
 </body>
 </html>
