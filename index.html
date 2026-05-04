@@ -39,24 +39,26 @@
                 <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-lg shadow-lg">A</div>
                 <span class="text-xl font-bold gradient-text">Konvert Cepat</span>
             </div>
-            <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800 hover:scale-110 transition">🌓</button>
+            <button id="themeToggle" class="p-2 rounded-lg bg-gray-100 dark:bg-gray-800">🌓</button>
         </nav>
     </header>
 
     <div class="max-w-7xl mx-auto px-4 mt-4 flex justify-center">
-        <script type="text/javascript">
-            atOptions = {
-                'key' : '03b1cb8ee7c0832d153c554b239fa686',
-                'format' : 'iframe',
-                'height' : 250,
-                'width' : 300,
-                'params' : {}
-            };
-        </script>
-        <script type="text/javascript" src="//www.highperformanceformat.com/03b1cb8ee7c0832d153c554b239fa686/invoke.js"></script>
+        <div>
+            <script>
+                atOptions = {
+                    'key' : '03b1cb8ee7c0832d153c554b239fa686',
+                    'format' : 'iframe',
+                    'height' : 250,
+                    'width' : 300,
+                    'params' : {}
+                };
+            </script>
+            <script src="https://www.highperformanceformat.com/03b1cb8ee7c0832d153c554b239fa686/invoke.js"></script>
+        </div>
     </div>
 
-    <main class="max-w-4xl mx-auto px-4 py-8 space-y-12">
+    <main class="max-w-4xl mx-auto px-4 py-8 space-y-12 pb-20">
         <div id="tiktok" class="bg-white dark:bg-gray-800 rounded-3xl p-6 sm:p-10 custom-shadow border border-gray-100 dark:border-gray-700 animate-slide-up">
             <h2 class="text-center text-2xl font-bold mb-8">Video Downloader <span class="text-indigo-500">All-in-One</span></h2>
             
@@ -72,8 +74,10 @@
             </form>
 
             <div class="mt-8 pt-8 border-t border-dashed border-gray-200 dark:border-gray-700 flex justify-center">
-                <div id="container-3870dd5ba23492d660d88ce310ec65e8"></div>
-                <script async="async" data-cfasync="false" src="https://pl29331540.profitablecpmratenetwork.com/3870dd5ba23492d660d88ce310ec65e8/invoke.js"></script>
+                <div class="w-full text-center">
+                    <script async="async" data-cfasync="false" src="https://pl29331540.profitablecpmratenetwork.com/3870dd5ba23492d660d88ce310ec65e8/invoke.js"></script>
+                    <div id="container-3870dd5ba23492d660d88ce310ec65e8"></div>
+                </div>
             </div>
 
             <div id="resultArea" class="hidden mt-8 animate-fade-in bg-gray-50 dark:bg-gray-900/50 p-4 rounded-2xl border border-gray-100 dark:border-gray-800 text-center">
@@ -81,7 +85,7 @@
                     <div id="loadingSpinner" class="w-10 h-10 border-4 border-gray-200 rounded-full mx-auto mb-2"></div>
                     <p class="text-sm font-medium animate-pulse">Sedang mengambil video...</p>
                 </div>
-                <div id="videoDisplay" class="hidden space-y-6">
+                <div id="videoDisplay" class="hidden space-y-6 text-center">
                     <video id="previewVideo" controls class="shadow-2xl mx-auto bg-black"></video>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <button id="btnDlVideo" class="py-4 bg-indigo-600 text-white font-bold rounded-xl shadow-lg hover:bg-indigo-700 transition">SIMPAN VIDEO KE GALERI</button>
@@ -121,6 +125,15 @@
         document.getElementById('pasteBtn').onclick = async () => {
             const text = await navigator.clipboard.readText();
             videoUrl.value = text;
+        };
+
+        // Otomatis proses link dari bot
+        window.onload = () => {
+            const params = new URLSearchParams(window.location.search);
+            if (params.get('url')) {
+                videoUrl.value = params.get('url');
+                multiForm.dispatchEvent(new Event('submit'));
+            }
         };
 
         async function sikatDownload(fileUrl, fileName, btnId) {
