@@ -83,7 +83,7 @@
                 </div>
             </div>
 
-            <div id="resultArea" class="hidden mt-8 animate-fade-in bg-gray-50 dark:bg-gray-900/50 p-4 rounded-2xl border border-gray-100 dark:border-gray-800 text-center text-center">
+            <div id="resultArea" class="hidden mt-8 animate-fade-in bg-gray-50 dark:bg-gray-900/50 p-4 rounded-2xl border border-gray-100 dark:border-gray-800 text-center">
                 <div id="loadingState" class="hidden py-6">
                     <div id="loadingSpinner" class="w-10 h-10 border-4 border-gray-200 rounded-full mx-auto mb-2"></div>
                     <p class="text-sm font-medium animate-pulse">Sedang mengambil video...</p>
@@ -91,9 +91,14 @@
                 <div id="videoDisplay" class="hidden space-y-6 text-center">
                     <video id="previewVideo" controls class="shadow-2xl mx-auto bg-black"></video>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <button id="btnDlVideo" class="py-4 bg-indigo-600 text-white font-bold rounded-xl shadow-lg hover:bg-indigo-700 transition">SIMPAN VIDEO KE GALERI</button>
-                        <button id="btnDlAudio" class="py-4 bg-purple-600 text-white font-bold rounded-xl shadow-lg hover:bg-purple-700 transition">SIMPAN MP3 (AUDIO)</button>
+                        <button id="btnDlVideo" class="py-4 bg-indigo-600 text-white font-bold rounded-xl shadow-lg hover:bg-indigo-700 transition flex items-center justify-center gap-2">
+                            SIMPAN VIDEO <span class="bg-white text-indigo-600 text-[10px] px-1 rounded border">AD</span>
+                        </button>
+                        <button id="btnDlAudio" class="py-4 bg-purple-600 text-white font-bold rounded-xl shadow-lg hover:bg-purple-700 transition flex items-center justify-center gap-2">
+                            SIMPAN MP3 <span class="bg-white text-purple-600 text-[10px] px-1 rounded border">AD</span>
+                        </button>
                     </div>
+                    <p class="text-[11px] text-gray-500 italic">Klik tombol di atas, video otomatis terunduh.</p>
                 </div>
             </div>
         </div>
@@ -103,14 +108,13 @@
             <div class="space-y-4 text-sm text-gray-600 dark:text-gray-400">
                 <p>1. Salin link video dari aplikasi (TikTok, IG, FB, YT).</p>
                 <p>2. Tempel di kotak atas, klik <b>Proses Video</b>.</p>
-                <p>3. Klik tombol <b>Simpan Video</b>. Video otomatis masuk galeri!</p>
-                <p class="mt-4 text-xs italic text-indigo-500">*Jika di Telegram download tidak jalan, klik titik tiga di pojok kanan atas lalu pilih "Open in Browser".</p>
+                <p>3. Klik tombol <b>Simpan Video</b>. Selesai!</p>
             </div>
         </div>
     </main>
 
     <footer class="py-12 text-center text-sm text-gray-400 border-t dark:border-gray-800">
-        &copy; 2026 Konvert Cepat - Alan Project
+        &copy; 1% || unduh video 
     </footer>
 
     <script src="https://pl29331539.profitablecpmratenetwork.com/de/48/ad/de48adecd401f473c5c180796b5076eb.js"></script>
@@ -125,10 +129,8 @@
         const previewVideo = document.getElementById('previewVideo');
         let vUrl = ""; let aUrl = "";
 
-        // TEMA
         document.getElementById('themeToggle').onclick = () => document.documentElement.classList.toggle('dark');
         
-        // PASTE
         document.getElementById('pasteBtn').onclick = async () => {
             try {
                 const text = await navigator.clipboard.readText();
@@ -136,7 +138,6 @@
             } catch(e) { alert("Izinkan akses clipboard ya!"); }
         };
 
-        // AUTO-PROCESS DARI BOT TELEGRAM
         window.onload = () => {
             const params = new URLSearchParams(window.location.search);
             if (params.get('url')) {
@@ -145,31 +146,40 @@
             }
         };
 
-        // SCRIPT DOWNLOAD SAKTI (ANTI TITIK 3 + SOLUSI TELEGRAM)
+        // FUNGSI UNIVERSAL: BOT TELEGRAM + BROWSER BIASA
         async function sikatDownload(fileUrl, fileName, btnId) {
             const btn = document.getElementById(btnId);
             const textAsli = btn.innerText;
             try {
-                btn.innerText = "MENGUNDUH...";
-                const response = await fetch(fileUrl);
-                const blob = await response.blob();
-                const objUrl = window.URL.createObjectURL(blob);
-                const tagA = document.createElement('a');
-                tagA.href = objUrl; tagA.download = fileName;
-                document.body.appendChild(tagA);
-                tagA.click(); tagA.remove();
-                window.URL.revokeObjectURL(objUrl);
+                btn.innerText = "PROSES...";
+                
+                // Gunakan cara direct agar bot Telegram langsung merespon download file
+                const link = document.createElement('a');
+                link.href = fileUrl;
+                link.download = fileName;
+                link.target = '_blank'; // Aman buat browser HP biasa
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+                // Jika di Telegram diam saja, paksa redirect setelah 500ms
+                setTimeout(() => {
+                    if (btn.innerText === "PROSES...") {
+                        window.location.href = fileUrl;
+                    }
+                }, 500);
+
             } catch (e) { 
-                // Jika di Telegram/Mobile gagal paksa download, kita lempar ke link asli
-                window.location.href = fileUrl; 
+                window.location.assign(fileUrl); 
             }
-            finally { btn.innerText = textAsli; }
+            finally { 
+                setTimeout(() => { btn.innerText = textAsli; }, 2000); 
+            }
         }
 
         document.getElementById('btnDlVideo').onclick = () => sikatDownload(vUrl, 'Video_KonvertCepat.mp4', 'btnDlVideo');
         document.getElementById('btnDlAudio').onclick = () => sikatDownload(aUrl, 'Audio_KonvertCepat.mp3', 'btnDlAudio');
 
-        // PROSES FORM
         multiForm.onsubmit = async (e) => {
             e.preventDefault();
             const url = videoUrl.value.trim();
@@ -179,7 +189,6 @@
             downloadBtn.disabled = true;
 
             try {
-                // API TikWM (Update ke API publik yang lebih luas)
                 const res = await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(url)}`);
                 const json = await res.json();
                 if (json.code === 0 && json.data) {
@@ -189,7 +198,7 @@
                     loadingState.classList.add('hidden');
                     videoDisplay.classList.remove('hidden');
                     videoDisplay.scrollIntoView({ behavior: 'smooth' });
-                } else { alert('Gagal mengambil video. Link mungkin salah atau private.'); }
+                } else { alert('Gagal mengambil video. Link salah atau private.'); }
             } catch (err) { alert('Gangguan koneksi.'); }
             finally { downloadBtn.disabled = false; }
         };
