@@ -40,7 +40,7 @@ module.exports = async (req, res) => {
           await axios.post(`${TG}/sendVideo`, {
             chat_id: chatId,
             video: videoUrl,
-            caption: '✅ Video Berhasil Diunduh!\n\nJoin: @ChannelKamu'
+            caption: '✅ Video Berhasil Diunduh!\n\nJoin: https://dwonload-video-tiktok.vercel.app/'
           });
 
           // 3. Kirim iklan setelah video
