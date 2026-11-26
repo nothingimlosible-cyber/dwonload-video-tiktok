@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support Us</title>
+    <meta name="3cc59f683f98644b1d13606571d4e88369c7111d" content="3cc59f683f98644b1d13606571d4e88369c7111d" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; }
+        video { width: 100%; border-radius: 20px; background: #000; max-height: 60vh; }
+    </style>
+</head>
+<body class="bg-[#f8fafc] text-[#1e293b]">
+    <main class="max-w-md mx-auto px-4 py-6 space-y-5">
+
+        <div class="text-center">
+            <h1 class="text-xl font-extrabold text-[#0f172a]">Thank you for supporting us ❤️</h1>
+            <p class="text-xs text-gray-500 mt-1">Watching this short ad helps keep the website alive.</p>
+        </div>
+
+        <div id="adBox" class="hidden space-y-2">
+            <div class="flex justify-between items-center text-[11px] font-bold text-gray-400 uppercase tracking-widest">
+                <span>Ad</span>
+                <div class="flex gap-2">
+                    <button type="button" id="adMute" class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full">🔇</button>
+                    <button type="button" id="adSkip" class="hidden bg-gray-800 text-white px-3 py-1 rounded-full">SKIP ▶</button>
+                </div>
+            </div>
+            <video id="adVideo" playsinline muted></video>
+            <button type="button" id="adMore" class="hidden w-full py-3 bg-indigo-50 text-indigo-700 font-bold rounded-2xl text-sm">Learn more</button>
+        </div>
+
+        <p id="status" class="text-center text-sm font-bold text-indigo-600 animate-pulse">Loading ad...</p>
+
+        <div id="thanks" class="hidden text-center p-4 bg-green-50 border border-green-100 rounded-2xl">
+            <p class="text-sm font-bold text-green-700">Done! Thank you 🙏 You can go back to Telegram now.</p>
+        </div>
+
+        <!-- Banner 300x250 (HilltopAds) -->
+        <div class="flex justify-center">
+            <script>
+            (function(mendrd){
+            var d = document,
+                s = d.createElement('script'),
+                l = d.currentScript || d.scripts[d.scripts.length - 1];
+            s.settings = mendrd || {};
+            s.src = "\/\/embellishedcoffee.com\/bBX_VJs.dDGLle0PYSWTcg\/JeamW9ruGZiUmlVkePFTLcG2QNajrEw4fMzDCEkt\/NgzvYe2bMnTZgiwXNhQl";
+            s.async = true;
+            s.referrerPolicy = 'no-referrer-when-downgrade';
+            l.parentNode.insertBefore(s, l);
+            })({})
+            </script>
+        </div>
+    </main>
+
+    <script>
+        const VAST_URL = "https://nautical-hand.com/dAm.FqzedoGXN/vEZWG/Uc/qe/mj9kupZeUblYkhPuTscx2MN/jOEy3_NIj/UmtFNOzJYQ2jMZT/cI2GOjQm";
+        // Cadangan: kalau iklan video gagal dimuat, buka link iklan ini
+        const LINK_CADANGAN = "https://araplhn.org/4/45d0e3c20629e2dd765b961fc23aa9a1";
+        const SKIP_SETELAH = 5;
+
+        const adBox = document.getElementById("adBox");
+        const adVideo = document.getElementById("adVideo");
+        const adSkip = document.getElementById("adSkip");
+        const adMute = document.getElementById("adMute");
+        const adMore = document.getElementById("adMore");
+        const statusEl = document.getElementById("status");
+        const thanks = document.getElementById("thanks");
+
+        function pingUrl(u) {
+            if (!u) return;
+            u = u.trim().replace(/\[TIMESTAMP\]|\[CACHEBUSTING\]|\[RANDOM\]/g, Date.now());
+            try { new Image().src = u; } catch (e) {}
+        }
+
+        async function ambilVast(url, trk, depth) {
+            if (depth > 4) throw new Error("wrapper terlalu dalam");
+            const ctrl = new AbortController();
+            const t = setTimeout(() => ctrl.abort(), 6000);
+            const res = await fetch(url, { signal: ctrl.signal });
+            clearTimeout(t);
+            const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
+            xml.querySelectorAll("Impression").forEach(e => trk.imp.push(e.textContent));
+            xml.querySelectorAll("Error").forEach(e => trk.err.push(e.textContent));
+            xml.querySelectorAll("Tracking").forEach(e => {
+                const ev = e.getAttribute("event");
+                (trk.ev[ev] = trk.ev[ev] || []).push(e.textContent);
+            });
+            xml.querySelectorAll("ClickTracking").forEach(e => trk.clickTrk.push(e.textContent));
+            const ct = xml.querySelector("ClickThrough");
+            if (ct && !trk.click) trk.click = ct.textContent.trim();
+            const next = xml.querySelector("Wrapper > VASTAdTagURI");
+            if (next) return ambilVast(next.textContent.trim(), trk, depth + 1);
+            let best = null, bestDiff = 1e9;
+            xml.querySelectorAll("MediaFile").forEach(m => {
+                const type = (m.getAttribute("type") || "").toLowerCase();
+                if (type && type.indexOf("mp4") === -1) return;
+                const w = parseInt(m.getAttribute("width") || "480", 10);
+                const diff = Math.abs(w - 480);
+                if (diff < bestDiff) { bestDiff = diff; best = m.textContent.trim(); }
+            });
+            trk.media = best;
+            return trk;
+        }
+
+        (async function () {
+            let selesai = false, mulai = false;
+            const sent = {};
+            const trk = { imp: [], err: [], ev: {}, clickTrk: [], click: "", media: null };
+            const fire = (n) => { if (sent[n]) return; sent[n] = true; (trk.ev[n] || []).forEach(pingUrl); };
+
+            const berhasilSelesai = () => {
+                if (selesai) return; selesai = true;
+                adBox.classList.add("hidden");
+                statusEl.classList.add("hidden");
+                thanks.classList.remove("hidden");
+            };
+            const gagal = () => {
+                if (selesai) return; selesai = true;
+                // Iklan video tidak tersedia: buka link cadangan supaya tetap jadi iklan
+                window.location.href = LINK_CADANGAN;
+            };
+            const guard = setTimeout(() => { if (!mulai) gagal(); }, 10000);
+
+            try {
+                await ambilVast(VAST_URL, trk, 0);
+                if (!trk.media) { gagal(); return; }
+
+                statusEl.classList.add("hidden");
+                adBox.classList.remove("hidden");
+                adMore.classList.toggle("hidden", !trk.click);
+
+                adVideo.muted = true;
+                adVideo.src = trk.media;
+
+                adVideo.onplaying = () => {
+                    if (mulai) return;
+                    mulai = true; clearTimeout(guard);
+                    trk.imp.forEach(pingUrl); fire("start");
+                    setTimeout(() => adSkip.classList.remove("hidden"), SKIP_SETELAH * 1000);
+                };
+                adVideo.ontimeupdate = () => {
+                    const d = adVideo.duration, c = adVideo.currentTime;
+                    if (!d) return;
+                    if (c >= d * 0.25) fire("firstQuartile");
+                    if (c >= d * 0.5) fire("midpoint");
+                    if (c >= d * 0.75) fire("thirdQuartile");
+                };
+                adVideo.onended = () => { fire("complete"); berhasilSelesai(); };
+                adVideo.onerror = () => { trk.err.forEach(pingUrl); gagal(); };
+
+                adSkip.onclick = () => { fire("skip"); berhasilSelesai(); };
+                adMute.onclick = () => {
+                    adVideo.muted = !adVideo.muted;
+                    adMute.textContent = adVideo.muted ? "🔇" : "🔊";
+                };
+                adMore.onclick = () => {
+                    trk.clickTrk.forEach(pingUrl);
+                    window.open(trk.click, "_blank");
+                };
+
+                const p = adVideo.play();
+                if (p && p.catch) p.catch(() => gagal());
+            } catch (e) {
+                gagal();
+            }
+        })();
+    </script>
+</body>
+</html>
