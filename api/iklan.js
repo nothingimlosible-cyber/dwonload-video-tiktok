@@ -32,7 +32,7 @@ module.exports = async (req, res) => {
       chat_id: user.id,
       text: "🙏 Please support us! Tap the button and view the ad for a few seconds. It helps keep this website alive 👇",
       reply_markup: {
-        inline_keyboard: [[{ text: "❤️ View Ad & Support Us", url: "https://araplhn.org/4/45d0e3c20629e2dd765b961fc23aa9a1" }]],
+        inline_keyboard: [[{ text: "❤️ View Ad & Support Us", url: "https://dwonload-video-tiktok.vercel.app/support.html" }]],
       },
     });
     res.json({ ok: true });
