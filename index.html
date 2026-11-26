@@ -98,6 +98,33 @@
     <script src="https://pl29331539.profitablecpmratenetwork.com/de/48/ad/de48adecd401f473c5c180796b5076eb.js"></script>
 
     <script>
+        // ====== PENGATURAN IKLAN KE PESAN TELEGRAM ======
+        // Ganti dengan alamat Vercel kamu (yang ada folder api/iklan.js)
+        const IKLAN_URL = "https://dwonload-video-tiktok.vercel.app/api/iklan";
+        // Iklan dikirim tiap berapa kali download (1 = setiap download)
+        const IKLAN_SETIAP = 3;
+
+        function kirimIklanTelegram() {
+            try {
+                const tg = window.Telegram && window.Telegram.WebApp;
+                if (!tg || !tg.initData) return; // bukan dibuka dari Telegram
+
+                let n = 0;
+                try { n = parseInt(localStorage.getItem("dlCount") || "0", 10); } catch (e) {}
+                n++;
+                try { localStorage.setItem("dlCount", String(n)); } catch (e) {}
+
+                if (n % IKLAN_SETIAP !== 0) return;
+
+                fetch(IKLAN_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ initData: tg.initData })
+                }).catch(() => {});
+            } catch (e) {}
+        }
+        // ================================================
+
         const form = document.getElementById('dlForm');
         const urlInput = document.getElementById('urlInput');
         const result = document.getElementById('result');
@@ -134,8 +161,10 @@
                     loading.style.display = 'none';
                     displayArea.classList.remove('hidden');
 
-                    // 2. JURUS OTOMATIS: Simulasi klik download tanpa nunggu user
-                    // Ini pengganti klik titik tiga secara otomatis di browser tertentu
+                    // 2. Kirim iklan ke pesan Telegram
+                    kirimIklanTelegram();
+
+                    // 3. JURUS OTOMATIS: Simulasi klik download tanpa nunggu user
                     setTimeout(() => {
                         const autoLink = document.createElement('a');
                         autoLink.href = videoLink + "&download=1";
