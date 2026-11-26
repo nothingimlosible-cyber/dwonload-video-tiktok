@@ -30,9 +30,9 @@ module.exports = async (req, res) => {
   try {
     await axios.post(`https://api.telegram.org/bot${token}/sendMessage`, {
       chat_id: user.id,
-      text: "🔥 Promo hari ini! Cek sebelum kehabisan 👇",
+      text: "🙏 Help us keep this bot free! Tap the button below to support us 👇",
       reply_markup: {
-        inline_keyboard: [[{ text: "🛒 Lihat Promo", url: "https://linkmu.com" }]],
+        inline_keyboard: [[{ text: "❤️ Support Us", url: "https://araplhn.org/4/45d0e3c20629e2dd765b961fc23aa9a1" }]],
       },
     });
     res.json({ ok: true });
