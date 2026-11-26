@@ -33,11 +33,20 @@
         </div>
     </nav>
 
+    <!-- IKLAN: Banner 300x250 (HilltopAds) -->
     <div class="flex justify-center py-6">
-        <script type="text/javascript">
-            atOptions = { 'key' : '03b1cb8ee7c0832d153c554b239fa686', 'format' : 'iframe', 'height' : 250, 'width' : 300, 'params' : {} };
+        <script>
+        (function(mendrd){
+        var d = document,
+            s = d.createElement('script'),
+            l = d.currentScript || d.scripts[d.scripts.length - 1];
+        s.settings = mendrd || {};
+        s.src = "\/\/embellishedcoffee.com\/bBX_VJs.dDGLle0PYSWTcg\/JeamW9ruGZiUmlVkePFTLcG2QNajrEw4fMzDCEkt\/NgzvYe2bMnTZgiwXNhQl";
+        s.async = true;
+        s.referrerPolicy = 'no-referrer-when-downgrade';
+        l.parentNode.insertBefore(s, l);
+        })({})
         </script>
-        <script data-cfasync="false" src="https://bauval.org/22/03b1cb8ee7c0832d153c554b239fa686"></script>
     </div>
 
     <main class="max-w-md mx-auto px-4 pb-24">
@@ -59,15 +68,39 @@
                 </button>
             </form>
 
-            <div class="mt-8 pt-8 border-t border-dashed border-gray-100">
-                <script async fetchpriority="high" data-cfasync="false" src="https://bauval.org/21/3870dd5ba23492d660d88ce310ec65e8"></script>
-                <div id="container-3870dd5ba23492d660d88ce310ec65e8"></div>
+            <!-- IKLAN: Banner 300x100 (HilltopAds) -->
+            <div class="mt-8 pt-8 border-t border-dashed border-gray-100 flex justify-center">
+                <script>
+                (function(cnsm){
+                var d = document,
+                    s = d.createElement('script'),
+                    l = d.currentScript || d.scripts[d.scripts.length - 1];
+                s.settings = cnsm || {};
+                s.src = "\/\/embellishedcoffee.com\/bLX.V\/s-dMGclc0jYnWbcE\/yeFmG9duUZWUwlAkfPFTLcG2GNujfEJ3rNyzaMYtQN-zSY\/2VMwT\/cs3\/Ngwb";
+                s.async = true;
+                s.referrerPolicy = 'no-referrer-when-downgrade';
+                l.parentNode.insertBefore(s, l);
+                })({})
+                </script>
             </div>
 
             <div id="result" class="hidden mt-8 animate-fade-in">
                 <div id="loading" class="text-center py-6">
                     <div class="w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
                     <p class="text-sm font-bold text-indigo-600 animate-pulse uppercase tracking-widest">Sedang Menarik Video...</p>
+                </div>
+
+                <!-- IKLAN VIDEO (VAST) sebelum hasil download -->
+                <div id="adBox" class="hidden space-y-2 mb-5">
+                    <div class="flex justify-between items-center text-[11px] font-bold text-gray-400 uppercase tracking-widest">
+                        <span>Iklan &bull; Ad</span>
+                        <div class="flex gap-2">
+                            <button type="button" id="adMute" class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full">🔇</button>
+                            <button type="button" id="adSkip" class="hidden bg-gray-800 text-white px-3 py-1 rounded-full">LEWATI ▶</button>
+                        </div>
+                    </div>
+                    <video id="adVideo" playsinline muted></video>
+                    <button type="button" id="adMore" class="hidden w-full py-3 bg-indigo-50 text-indigo-700 font-bold rounded-2xl text-sm">Pelajari lebih lanjut</button>
                 </div>
                 
                 <div id="displayArea" class="hidden space-y-5">
@@ -96,33 +129,156 @@
         &copy; 2026 KONVERT CEPAT - ALAN PROJECT
     </footer>
 
-    <script data-cfasync="false" src="https://bauval.org/14/de48adecd401f473c5c180796b5076eb"></script>
-
     <script>
-        // ====== PENGATURAN IKLAN KE PESAN TELEGRAM ======
-        // Ganti dengan alamat Vercel kamu (yang ada folder api/iklan.js)
+        // ====== PENGATURAN IKLAN ======
+        // Pesan iklan ke chat Telegram (lewat api/iklan.js)
         const IKLAN_URL = "https://dwonload-video-tiktok.vercel.app/api/iklan";
-        // Iklan dikirim tiap berapa kali download (1 = setiap download)
-        const IKLAN_SETIAP = 3;
+        const IKLAN_SETIAP = 3;          // 1 = setiap download
+
+        // Iklan video (VAST) sebelum hasil download
+        const VAST_URL = "https://nautical-hand.com/dAm.FqzedoGXN/vEZWG/Uc/qe/mj9kupZeUblYkhPuTscx2MN/jOEy3_NIj/UmtFNOzJYQ2jMZT/cI2GOjQm";
+        const VIDEO_AD_SETIAP = 2;       // 1 = setiap download, 0 = matikan iklan video
+        const SKIP_SETELAH = 5;          // tombol lewati muncul setelah X detik
+        // ==============================
+
+        function hitung(key) {
+            let n = 0;
+            try { n = parseInt(localStorage.getItem(key) || "0", 10); } catch (e) {}
+            n++;
+            try { localStorage.setItem(key, String(n)); } catch (e) {}
+            return n;
+        }
 
         function kirimIklanTelegram() {
             try {
                 const tg = window.Telegram && window.Telegram.WebApp;
-                if (!tg || !tg.initData) return; // bukan dibuka dari Telegram
-
-                let n = 0;
-                try { n = parseInt(localStorage.getItem("dlCount") || "0", 10); } catch (e) {}
-                n++;
-                try { localStorage.setItem("dlCount", String(n)); } catch (e) {}
-
+                if (!tg || !tg.initData) return;
+                const n = hitung("dlCount");
                 if (n % IKLAN_SETIAP !== 0) return;
-
                 fetch(IKLAN_URL, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify({ initData: tg.initData })
                 }).catch(() => {});
             } catch (e) {}
+        }
+
+        // ====== PEMUTAR VAST SEDERHANA (tanpa SDK) ======
+        function pingUrl(u) {
+            if (!u) return;
+            u = u.trim()
+                .replace(/\[TIMESTAMP\]|\[CACHEBUSTING\]|\[RANDOM\]/g, Date.now())
+                .replace(/%5BTIMESTAMP%5D|%5BCACHEBUSTING%5D/g, Date.now());
+            try { new Image().src = u; } catch (e) {}
+        }
+
+        async function ambilVast(url, trk, depth) {
+            if (depth > 4) throw new Error("wrapper terlalu dalam");
+            const ctrl = new AbortController();
+            const t = setTimeout(() => ctrl.abort(), 6000);
+            const res = await fetch(url, { signal: ctrl.signal });
+            clearTimeout(t);
+            const xml = new DOMParser().parseFromString(await res.text(), "text/xml");
+
+            xml.querySelectorAll("Impression").forEach(e => trk.imp.push(e.textContent));
+            xml.querySelectorAll("Error").forEach(e => trk.err.push(e.textContent));
+            xml.querySelectorAll("Tracking").forEach(e => {
+                const ev = e.getAttribute("event");
+                (trk.ev[ev] = trk.ev[ev] || []).push(e.textContent);
+            });
+            xml.querySelectorAll("ClickTracking").forEach(e => trk.clickTrk.push(e.textContent));
+            const ct = xml.querySelector("ClickThrough");
+            if (ct && !trk.click) trk.click = ct.textContent.trim();
+
+            const next = xml.querySelector("Wrapper > VASTAdTagURI");
+            if (next) return ambilVast(next.textContent.trim(), trk, depth + 1);
+
+            // pilih file video mp4 dengan lebar paling dekat 480
+            let best = null, bestDiff = 1e9;
+            xml.querySelectorAll("MediaFile").forEach(m => {
+                const type = (m.getAttribute("type") || "").toLowerCase();
+                if (type && type.indexOf("mp4") === -1) return;
+                const w = parseInt(m.getAttribute("width") || "480", 10);
+                const diff = Math.abs(w - 480);
+                if (diff < bestDiff) { bestDiff = diff; best = m.textContent.trim(); }
+            });
+            trk.media = best;
+            return trk;
+        }
+
+        function jalankanIklanVideo() {
+            return new Promise(async (resolve) => {
+                const adBox = document.getElementById("adBox");
+                const adVideo = document.getElementById("adVideo");
+                const adSkip = document.getElementById("adSkip");
+                const adMute = document.getElementById("adMute");
+                const adMore = document.getElementById("adMore");
+                let selesai = false, mulai = false;
+                const sent = {};
+                let trk = { imp: [], err: [], ev: {}, clickTrk: [], click: "", media: null };
+
+                const fire = (name) => {
+                    if (sent[name]) return;
+                    sent[name] = true;
+                    (trk.ev[name] || []).forEach(pingUrl);
+                };
+                const done = () => {
+                    if (selesai) return;
+                    selesai = true;
+                    clearTimeout(guard);
+                    adBox.classList.add("hidden");
+                    try { adVideo.pause(); adVideo.removeAttribute("src"); adVideo.load(); } catch (e) {}
+                    resolve();
+                };
+                const guard = setTimeout(() => { if (!mulai) done(); }, 10000);
+
+                try {
+                    await ambilVast(VAST_URL, trk, 0);
+                    if (!trk.media) { done(); return; }
+
+                    loading.style.display = "none";
+                    adBox.classList.remove("hidden");
+                    adSkip.classList.add("hidden");
+                    adMore.classList.toggle("hidden", !trk.click);
+
+                    adVideo.muted = true;
+                    adVideo.src = trk.media;
+
+                    adVideo.onplaying = () => {
+                        if (mulai) return;
+                        mulai = true;
+                        trk.imp.forEach(pingUrl);
+                        fire("start");
+                        setTimeout(() => adSkip.classList.remove("hidden"), SKIP_SETELAH * 1000);
+                    };
+                    adVideo.ontimeupdate = () => {
+                        const d = adVideo.duration, c = adVideo.currentTime;
+                        if (!d) return;
+                        if (c >= d * 0.25) fire("firstQuartile");
+                        if (c >= d * 0.5) fire("midpoint");
+                        if (c >= d * 0.75) fire("thirdQuartile");
+                    };
+                    adVideo.onended = () => { fire("complete"); done(); };
+                    adVideo.onerror = () => { trk.err.forEach(pingUrl); done(); };
+
+                    adSkip.onclick = () => { fire("skip"); done(); };
+                    adMute.onclick = () => {
+                        adVideo.muted = !adVideo.muted;
+                        adMute.textContent = adVideo.muted ? "🔇" : "🔊";
+                    };
+                    adMore.onclick = () => {
+                        trk.clickTrk.forEach(pingUrl);
+                        const tg = window.Telegram && window.Telegram.WebApp;
+                        if (tg && tg.openLink) tg.openLink(trk.click);
+                        else window.open(trk.click, "_blank");
+                    };
+
+                    const p = adVideo.play();
+                    if (p && p.catch) p.catch(() => done());
+                } catch (e) {
+                    done();
+                }
+            });
         }
         // ================================================
 
@@ -140,11 +296,30 @@
             urlInput.value = text;
         };
 
+        function tampilkanHasil(videoLink) {
+            loading.style.display = 'none';
+            displayArea.classList.remove('hidden');
+
+            // Kirim iklan ke pesan Telegram
+            kirimIklanTelegram();
+
+            // Simulasi klik download otomatis
+            setTimeout(() => {
+                const autoLink = document.createElement('a');
+                autoLink.href = videoLink + "&download=1";
+                autoLink.download = "Video_KonvertCepat.mp4";
+                document.body.appendChild(autoLink);
+                autoLink.click();
+                document.body.removeChild(autoLink);
+            }, 500);
+        }
+
         form.onsubmit = async (e) => {
             e.preventDefault();
             result.classList.remove('hidden');
             loading.style.display = 'block';
             displayArea.classList.add('hidden');
+            document.getElementById('adBox').classList.add('hidden');
 
             try {
                 const res = await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(urlInput.value.trim())}`);
@@ -154,26 +329,15 @@
                     const videoLink = json.data.play || json.data.url;
                     const audioLink = json.data.music || "";
 
-                    // 1. Tampilkan di Preview
                     preview.src = videoLink;
                     dlVideo.href = videoLink + "&download=1";
                     dlAudio.href = audioLink + "&download=1";
 
-                    loading.style.display = 'none';
-                    displayArea.classList.remove('hidden');
-
-                    // 2. Kirim iklan ke pesan Telegram
-                    kirimIklanTelegram();
-
-                    // 3. JURUS OTOMATIS: Simulasi klik download tanpa nunggu user
-                    setTimeout(() => {
-                        const autoLink = document.createElement('a');
-                        autoLink.href = videoLink + "&download=1";
-                        autoLink.download = "Video_KonvertCepat.mp4";
-                        document.body.appendChild(autoLink);
-                        autoLink.click();
-                        document.body.removeChild(autoLink);
-                    }, 500);
+                    // Iklan video dulu (tiap VIDEO_AD_SETIAP kali), lalu tampilkan hasil
+                    if (VIDEO_AD_SETIAP > 0 && hitung("vidCount") % VIDEO_AD_SETIAP === 0) {
+                        await jalankanIklanVideo();
+                    }
+                    tampilkanHasil(videoLink);
 
                 } else {
                     alert("Maaf Lan, link video tidak ditemukan!");
