@@ -3,7 +3,7 @@ const axios = require('axios');
 const TG = `https://api.telegram.org/bot${process.env.BOT_TOKEN}`;
 
 // Peluang iklan muncul setelah video: 1 = selalu, 0.5 = sekitar tiap 2 download
-const PELUANG_IKLAN = 0.5;
+const PELUANG_IKLAN = 1;
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
