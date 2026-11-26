@@ -1,38 +1,71 @@
 const axios = require('axios');
 
+const TG = `https://api.telegram.org/bot${process.env.BOT_TOKEN}`;
+
+// Peluang iklan muncul setelah video: 1 = selalu, 0.5 = sekitar tiap 2 download
+const PELUANG_IKLAN = 0.5;
+
 module.exports = async (req, res) => {
-  if (req.method === 'POST') {
-    const { message } = req.body;
+  if (req.method !== 'POST') {
+    return res.status(200).send('Gunakan POST');
+  }
 
-    if (message && message.text) {
-      const chatId = message.chat.id;
-      const text = message.text;
+  const { message } = req.body || {};
 
-      // Cek apakah pesan berisi link TikTok/IG/FB
-      if (text.includes('tiktok.com') || text.includes('instagram.com')) {
-        try {
-          // 1. Ambil data dari API TikWM
-          const response = await axios.get(`https://www.tikwm.com/api/?url=${encodeURIComponent(text)}`);
-          const data = response.data.data;
+  if (message && message.text) {
+    const chatId = message.chat.id;
+    const text = message.text;
 
-          if (data) {
-            const videoUrl = data.play || data.url;
-            const caption = "✅ Video Berhasil Diunduh!\n\nJoin: @ChannelKamu";
+    // Sambutan saat pengguna tekan Start
+    if (text.startsWith('/start')) {
+      await axios.post(`${TG}/sendMessage`, {
+        chat_id: chatId,
+        text: '👋 Halo! Kirim link video TikTok ke sini, nanti aku unduhkan tanpa watermark.'
+      }).catch(() => {});
+      return res.status(200).send('ok');
+    }
 
-            // 2. Kirim video sebagai FILE (langsung mengunduh di chat)
-            await axios.post(`https://api.telegram.org/bot${process.env.BOT_TOKEN}/sendVideo`, {
+    if (text.includes('tiktok.com') || text.includes('instagram.com')) {
+      try {
+        // 1. Ambil data dari API TikWM
+        const response = await axios.get(
+          `https://www.tikwm.com/api/?url=${encodeURIComponent(text.trim())}`
+        );
+        const data = response.data.data;
+
+        if (data) {
+          const videoUrl = data.play || data.url;
+
+          // 2. Kirim video
+          await axios.post(`${TG}/sendVideo`, {
+            chat_id: chatId,
+            video: videoUrl,
+            caption: '✅ Video Berhasil Diunduh!\n\nJoin: @ChannelKamu'
+          });
+
+          // 3. Kirim iklan setelah video
+          if (Math.random() < PELUANG_IKLAN) {
+            await axios.post(`${TG}/sendMessage`, {
               chat_id: chatId,
-              video: videoUrl,
-              caption: caption
+              text: '🔥 Promo hari ini! Cek sebelum kehabisan 👇',
+              reply_markup: {
+                inline_keyboard: [[
+                  { text: '🛒 Lihat Promo', url: 'https://linkmu.com' }
+                ]]
+              }
             });
           }
-        } catch (error) {
-          console.error(error);
+        } else {
+          await axios.post(`${TG}/sendMessage`, {
+            chat_id: chatId,
+            text: '❌ Video tidak ditemukan. Pastikan link-nya benar.'
+          });
         }
+      } catch (error) {
+        console.error(error);
       }
     }
-    res.status(200).send('ok');
-  } else {
-    res.status(200).send('Gunakan POST');
   }
+
+  res.status(200).send('ok');
 };
