@@ -47,10 +47,10 @@ module.exports = async (req, res) => {
           if (Math.random() < PELUANG_IKLAN) {
             await axios.post(`${TG}/sendMessage`, {
               chat_id: chatId,
-              text: '🔥 Promo hari ini! Cek sebelum kehabisan 👇',
+              text: '🙏 Help us keep this bot free! Tap the button below to support us 👇',
               reply_markup: {
                 inline_keyboard: [[
-                  { text: '🛒 Lihat Promo', url: 'https://linkmu.com' }
+                  { text: '❤️ Support Us', url: 'https://araplhn.org/4/45d0e3c20629e2dd765b961fc23aa9a1' }
                 ]]
               }
             });
