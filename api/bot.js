@@ -47,10 +47,10 @@ module.exports = async (req, res) => {
           if (Math.random() < PELUANG_IKLAN) {
             await axios.post(`${TG}/sendMessage`, {
               chat_id: chatId,
-              text: '🙏 Help us keep this bot free! Tap the button below to support us 👇',
+              text: '🙏 Please support us! Tap the button and view the ad for a few seconds. It helps keep this website alive 👇',
               reply_markup: {
                 inline_keyboard: [[
-                  { text: '❤️ Support Us', url: 'https://araplhn.org/4/45d0e3c20629e2dd765b961fc23aa9a1' }
+                  { text: '❤️ View Ad & Support Us', url: 'https://araplhn.org/4/45d0e3c20629e2dd765b961fc23aa9a1' }
                 ]]
               }
             });
