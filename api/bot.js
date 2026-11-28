@@ -2,8 +2,17 @@ const axios = require('axios');
 
 const TG = `https://api.telegram.org/bot${process.env.BOT_TOKEN}`;
 
-// Peluang iklan muncul setelah video: 1 = selalu, 0.5 = sekitar tiap 2 download
-const PELUANG_IKLAN = 1;
+// Alamat Mini App dan halaman iklan
+const APP_URL = 'https://dwonload-video-tiktok.vercel.app/';
+const SUPPORT_URL = 'https://dwonload-video-tiktok.vercel.app/support.html';
+
+// Tombol di bawah pesan (Mini App + iklan)
+const TOMBOL = {
+  inline_keyboard: [
+    [{ text: '📲 Open App', web_app: { url: APP_URL } }],
+    [{ text: '❤️ View Ad & Support Us', url: SUPPORT_URL }]
+  ]
+};
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
@@ -20,7 +29,8 @@ module.exports = async (req, res) => {
     if (text.startsWith('/start')) {
       await axios.post(`${TG}/sendMessage`, {
         chat_id: chatId,
-        text: '👋 Halo! Kirim link video TikTok ke sini, nanti aku unduhkan tanpa watermark.'
+        text: '👋 Halo! Kirim link video TikTok ke sini, nanti aku unduhkan tanpa watermark.\n\nAtau buka aplikasinya lewat tombol di bawah 👇',
+        reply_markup: { inline_keyboard: [[{ text: '📲 Open App', web_app: { url: APP_URL } }]] }
       }).catch(() => {});
       return res.status(200).send('ok');
     }
@@ -36,25 +46,13 @@ module.exports = async (req, res) => {
         if (data) {
           const videoUrl = data.play || data.url;
 
-          // 2. Kirim video
+          // 2. Kirim video + tombol dalam satu pesan
           await axios.post(`${TG}/sendVideo`, {
             chat_id: chatId,
             video: videoUrl,
-            caption: '✅ Video Berhasil Diunduh!\n\nJoin: https://dwonload-video-tiktok.vercel.app/'
+            caption: '✅ Video Berhasil Diunduh!\n\n🙏 Bantu kami tetap aktif, tekan tombol di bawah.',
+            reply_markup: TOMBOL
           });
-
-          // 3. Kirim iklan setelah video
-          if (Math.random() < PELUANG_IKLAN) {
-            await axios.post(`${TG}/sendMessage`, {
-              chat_id: chatId,
-              text: '🙏 Please support us! Tap the button and view the ad for a few seconds. It helps keep this website alive 👇',
-              reply_markup: {
-                inline_keyboard: [[
-                  { text: '❤️ View Ad & Support Us', url: 'https://dwonload-video-tiktok.vercel.app/support.html' }
-                ]]
-              }
-            });
-          }
         } else {
           await axios.post(`${TG}/sendMessage`, {
             chat_id: chatId,
