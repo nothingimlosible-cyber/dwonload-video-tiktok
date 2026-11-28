@@ -4,62 +4,69 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Download Video TikTok HD - Konvert Cepat</title>
-    
     <meta name="description" content="Download video TikTok tanpa watermark gratis dan cepat.">
     <meta name="3cc59f683f98644b1d13606571d4e88369c7111d" content="3cc59f683f98644b1d13606571d4e88369c7111d" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .glass-card { background: rgba(255, 255, 255, 1); border: 1px solid #f0f0f0; }
+        html { scroll-behavior: smooth; }
+        .glass-card { background: #fff; border: 1px solid #f0f0f0; }
         .gradient-bg { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); }
         .btn-download { background: #22c55e; transition: 0.3s; }
-        .btn-download:hover { background: #16a34a; transform: translateY(-2px); }
+        .btn-download:active { transform: scale(0.97); }
         video { width: 100%; border-radius: 20px; background: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         #loading { display: none; }
+        .tab { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 4px; border-radius: 16px;
+               background: #f1f5f9; font-size: 11px; font-weight: 800; color: #64748b; border: 2px solid transparent; position: relative; }
+        .tab .ico { font-size: 20px; }
+        .tab.active { background: #eef2ff; color: #4338ca; border-color: #6366f1; }
+        .tab .soon { font-size: 8px; font-weight: 700; background: #fef3c7; color: #b45309; padding: 1px 6px; border-radius: 999px; }
     </style>
 </head>
 <body class="bg-[#f8fafc] text-[#1e293b]">
 
+    <!-- MENU -->
     <nav class="p-4 bg-white border-b border-gray-100 sticky top-0 z-50">
-        <div class="max-w-md mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-2">
-                <div class="w-9 h-9 rounded-xl gradient-bg flex items-center justify-center text-white font-bold shadow-lg">A</div>
-                <span class="font-extrabold text-lg tracking-tight text-[#0f172a]">Konvert Cepat</span>
+        <div class="max-w-md mx-auto">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-2">
+                    <div class="w-9 h-9 rounded-xl gradient-bg flex items-center justify-center text-white font-bold shadow-lg">A</div>
+                    <span class="font-extrabold text-lg tracking-tight text-[#0f172a]">Konvert Cepat</span>
+                </div>
+                <button id="menuBtn" type="button" class="w-10 h-10 rounded-xl bg-slate-100 text-xl font-bold" aria-label="Menu">☰</button>
             </div>
-            <span class="text-[10px] bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full font-bold border border-indigo-100 uppercase">Versi 2.0</span>
+            <div id="menuPanel" class="hidden mt-3 pt-3 border-t border-gray-100 space-y-1">
+                <a href="#beranda" class="menuLink block py-2 px-3 rounded-xl font-bold text-sm hover:bg-slate-50">🏠 Beranda</a>
+                <a href="#cara" class="menuLink block py-2 px-3 rounded-xl font-bold text-sm hover:bg-slate-50">📖 Cara Download</a>
+                <a href="#faq" class="menuLink block py-2 px-3 rounded-xl font-bold text-sm hover:bg-slate-50">❓ Tanya Jawab</a>
+            </div>
         </div>
     </nav>
 
-    <!-- IKLAN: Banner 300x250 (HilltopAds) -->
-    <div class="flex justify-center py-6">
-        <script>
-        (function(mendrd){
-        var d = document,
-            s = d.createElement('script'),
-            l = d.currentScript || d.scripts[d.scripts.length - 1];
-        s.settings = mendrd || {};
-        s.src = "\/\/embellishedcoffee.com\/bBX_VJs.dDGLle0PYSWTcg\/JeamW9ruGZiUmlVkePFTLcG2QNajrEw4fMzDCEkt\/NgzvYe2bMnTZgiwXNhQl";
-        s.async = true;
-        s.referrerPolicy = 'no-referrer-when-downgrade';
-        l.parentNode.insertBefore(s, l);
-        })({})
-        </script>
-    </div>
+    <main class="max-w-md mx-auto px-4 py-6 pb-24 space-y-6">
 
-    <main class="max-w-md mx-auto px-4 pb-24">
-        
-        <div class="glass-card rounded-[32px] p-6 shadow-2xl shadow-indigo-100/50">
-            <div class="text-center mb-8">
-                <h2 class="text-2xl font-extrabold text-[#0f172a]">TikTok Downloader</h2>
-                <p class="text-[12px] text-gray-400 mt-1 font-medium italic">Simpan video tanpa watermark secara otomatis</p>
+        <!-- DOWNLOADER -->
+        <div id="beranda" class="glass-card rounded-[32px] p-6 shadow-2xl shadow-indigo-100/50">
+            <div class="text-center mb-6">
+                <h1 class="text-2xl font-extrabold text-[#0f172a]">Video Downloader</h1>
+                <p class="text-[12px] text-gray-400 mt-1 font-medium italic">Simpan video tanpa watermark, gratis</p>
             </div>
 
-            <form id="dlForm" class="space-y-4">
+            <!-- Pilihan platform -->
+            <div class="grid grid-cols-4 gap-2 mb-2" id="tabs">
+                <button type="button" class="tab active" data-p="tiktok"><span class="ico">🎵</span>TikTok</button>
+                <button type="button" class="tab" data-p="youtube"><span class="ico">▶️</span>YouTube<span class="soon">Segera</span></button>
+                <button type="button" class="tab" data-p="facebook"><span class="ico">📘</span>Facebook<span class="soon">Segera</span></button>
+                <button type="button" class="tab" data-p="instagram"><span class="ico">📷</span>Instagram<span class="soon">Segera</span></button>
+            </div>
+            <p id="notice" class="hidden text-[12px] font-semibold text-amber-700 bg-amber-50 border border-amber-100 rounded-xl p-3 mb-4 text-center"></p>
+
+            <form id="dlForm" class="space-y-4 mt-4">
                 <div class="relative">
-                    <input type="url" id="urlInput" placeholder="Tempel link video di sini..." 
+                    <input type="url" id="urlInput" placeholder="Tempel link video TikTok di sini..."
                         class="w-full p-4 pr-12 rounded-2xl border-2 border-gray-50 bg-[#f1f5f9] outline-none focus:border-indigo-500 transition-all font-medium text-sm" required>
                     <button type="button" id="pasteBtn" class="absolute right-4 top-4 text-gray-400">📋</button>
                 </div>
@@ -69,7 +76,7 @@
             </form>
 
             <!-- IKLAN: Banner 300x100 (HilltopAds) -->
-            <div class="mt-8 pt-8 border-t border-dashed border-gray-100 flex justify-center">
+            <div class="mt-8 pt-6 border-t border-dashed border-gray-100 flex justify-center">
                 <script>
                 (function(cnsm){
                 var d = document,
@@ -84,13 +91,13 @@
                 </script>
             </div>
 
-            <div id="result" class="hidden mt-8 animate-fade-in">
+            <div id="result" class="hidden mt-8">
                 <div id="loading" class="text-center py-6">
                     <div class="w-8 h-8 border-4 border-indigo-600 border-t-transparent rounded-full animate-spin mx-auto mb-3"></div>
                     <p class="text-sm font-bold text-indigo-600 animate-pulse uppercase tracking-widest">Sedang Menarik Video...</p>
                 </div>
 
-                <!-- IKLAN VIDEO (VAST) sebelum hasil download -->
+                <!-- IKLAN VIDEO (VAST) -->
                 <div id="adBox" class="hidden space-y-2 mb-5">
                     <div class="flex justify-between items-center text-[11px] font-bold text-gray-400 uppercase tracking-widest">
                         <span>Iklan &bull; Ad</span>
@@ -102,44 +109,90 @@
                     <video id="adVideo" playsinline muted></video>
                     <button type="button" id="adMore" class="hidden w-full py-3 bg-indigo-50 text-indigo-700 font-bold rounded-2xl text-sm">Pelajari lebih lanjut</button>
                 </div>
-                
+
                 <div id="displayArea" class="hidden space-y-5">
-                    <video id="preview" controls preload="auto" poster=""></video>
-                    
+                    <video id="preview" controls playsinline preload="metadata"></video>
+
                     <div class="flex flex-col gap-3">
-                        <a id="dlVideo" href="#" target="_blank" class="w-full py-4 btn-download text-white font-extrabold rounded-2xl text-center shadow-lg shadow-green-100 flex items-center justify-center gap-2">
-                            <span>SIMPAN KE GALERI</span>
-                            <span class="text-[10px] bg-white/20 px-2 py-0.5 rounded border border-white/30 font-normal">AUTO</span>
-                        </a>
-                        <a id="dlAudio" href="#" target="_blank" class="w-full py-4 bg-[#8b5cf6] text-white font-bold rounded-2xl text-center shadow-lg text-sm">SIMPAN MP3</a>
+                        <button id="dlVideo" type="button" class="w-full py-4 btn-download text-white font-extrabold rounded-2xl text-center shadow-lg shadow-green-100">
+                            ⬇️ SIMPAN VIDEO
+                        </button>
+                        <button id="dlAudio" type="button" class="w-full py-4 bg-[#8b5cf6] text-white font-bold rounded-2xl text-center shadow-lg text-sm">
+                            🎵 SIMPAN MP3
+                        </button>
                     </div>
 
                     <div class="p-4 bg-indigo-50 rounded-2xl border border-indigo-100">
                         <p class="text-[11px] text-indigo-700 leading-relaxed font-semibold text-center">
-                            <b>TIPS:</b> Jika video hanya berputar, klik <b>Titik Tiga (⋮)</b> lalu pilih <b>Download</b>, atau gunakan menu <b>"Buka di Browser"</b> di Telegram.
+                            <b>TIPS:</b> Jika unduhan tidak berjalan, tekan <b>Titik Tiga (⋮)</b> lalu pilih <b>"Buka di Browser"</b>.
                         </p>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- CARA DOWNLOAD -->
+        <section id="cara" class="glass-card rounded-[32px] p-6 shadow-xl shadow-indigo-100/30">
+            <h2 class="text-lg font-extrabold text-[#0f172a] mb-4">📖 Cara Download</h2>
+            <ol class="space-y-3 text-sm">
+                <li class="flex gap-3"><span class="w-7 h-7 shrink-0 rounded-full gradient-bg text-white font-bold flex items-center justify-center text-xs">1</span><span>Buka TikTok, pilih video, lalu tekan <b>Bagikan</b> dan <b>Salin Tautan</b>.</span></li>
+                <li class="flex gap-3"><span class="w-7 h-7 shrink-0 rounded-full gradient-bg text-white font-bold flex items-center justify-center text-xs">2</span><span>Kembali ke sini, tempel link di kolom lalu tekan <b>Proses Sekarang</b>.</span></li>
+                <li class="flex gap-3"><span class="w-7 h-7 shrink-0 rounded-full gradient-bg text-white font-bold flex items-center justify-center text-xs">3</span><span>Tekan <b>Simpan Video</b> (atau <b>Simpan MP3</b>), tutup iklan, dan file akan terunduh.</span></li>
+            </ol>
+        </section>
+
+        <!-- FAQ -->
+        <section id="faq" class="glass-card rounded-[32px] p-6 shadow-xl shadow-indigo-100/30">
+            <h2 class="text-lg font-extrabold text-[#0f172a] mb-4">❓ Tanya Jawab</h2>
+            <div class="space-y-3 text-sm">
+                <details class="bg-slate-50 rounded-2xl p-4">
+                    <summary class="font-bold cursor-pointer">Apakah gratis?</summary>
+                    <p class="mt-2 text-gray-600">Ya, gratis. Iklan yang tampil membantu situs ini tetap aktif.</p>
+                </details>
+                <details class="bg-slate-50 rounded-2xl p-4">
+                    <summary class="font-bold cursor-pointer">Kenapa video tidak mau terunduh?</summary>
+                    <p class="mt-2 text-gray-600">Pastikan link benar dan videonya bukan akun privat. Kalau masih gagal, buka lewat menu <b>"Buka di Browser"</b> di Telegram.</p>
+                </details>
+                <details class="bg-slate-50 rounded-2xl p-4">
+                    <summary class="font-bold cursor-pointer">Apakah YouTube, Facebook, dan Instagram bisa?</summary>
+                    <p class="mt-2 text-gray-600">Saat ini baru TikTok yang tersedia. Platform lain masih dalam rencana.</p>
+                </details>
+                <details class="bg-slate-50 rounded-2xl p-4">
+                    <summary class="font-bold cursor-pointer">Aturan penggunaan</summary>
+                    <p class="mt-2 text-gray-600">Gunakan hanya untuk video milikmu atau yang kamu punya izin menyimpannya. Hargai hak cipta pembuat konten.</p>
+                </details>
+            </div>
+        </section>
+
     </main>
 
-    <footer class="text-center py-12 text-gray-300 text-[10px] font-bold tracking-widest">
+    <footer class="text-center py-10 text-gray-300 text-[10px] font-bold tracking-widest">
         &copy; 2026 KONVERT CEPAT - ALAN PROJECT
     </footer>
 
-    <script>
-        // ====== PENGATURAN IKLAN ======
-        // Pesan iklan ke chat Telegram (lewat api/iklan.js)
-        const IKLAN_URL = "https://dwonload-video-tiktok.vercel.app/api/iklan";
-        const IKLAN_SETIAP = 3;          // 1 = setiap download
+    <!-- IKLAN SELA (interstitial): muncul saat tombol simpan ditekan -->
+    <div id="interstitial" class="hidden fixed inset-0 z-[100] bg-black/70 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl p-5 w-full max-w-sm text-center space-y-3">
+            <div class="text-[11px] font-bold text-gray-400 uppercase tracking-widest">Iklan &bull; Ad</div>
+            <div id="intBanner" class="flex justify-center items-center min-h-[250px] text-gray-300 text-xs">Memuat iklan...</div>
+            <button id="intClose" type="button" disabled class="w-full py-3 rounded-2xl font-bold bg-gray-200 text-gray-500">Tutup dalam 3</button>
+        </div>
+    </div>
 
-        // Iklan video (VAST) sebelum hasil download
+    <script>
+        // ====== PENGATURAN ======
+        const IKLAN_URL = "https://dwonload-video-tiktok.vercel.app/api/iklan";
+        const IKLAN_SETIAP = 3;            // pesan iklan ke chat Telegram: tiap X download
+
         const VAST_URL = "https://nautical-hand.com/dAm.FqzedoGXN/vEZWG/Uc/qe/mj9kupZeUblYkhPuTscx2MN/jOEy3_NIj/UmtFNOzJYQ2jMZT/cI2GOjQm";
-        const VIDEO_AD_SETIAP = 2;       // 1 = setiap download, 0 = matikan iklan video
-        const SKIP_SETELAH = 5;          // tombol lewati muncul setelah X detik
-        // ==============================
+        const VIDEO_AD_SETIAP = 2;         // iklan video sebelum hasil: tiap X proses (0 = mati)
+        const SKIP_SETELAH = 5;            // detik sebelum tombol "Lewati" iklan video
+
+        const INTERSTITIAL_SETIAP = 1;     // iklan sela saat klik simpan: tiap X klik (0 = mati)
+        const INTERSTITIAL_DETIK = 3;      // detik sebelum tombol "Tutup" aktif
+        // ========================
+
+        try { const tg = window.Telegram && window.Telegram.WebApp; if (tg) { tg.ready(); tg.expand(); } } catch (e) {}
 
         function hitung(key) {
             let n = 0;
@@ -149,12 +202,35 @@
             return n;
         }
 
+        // ---------- Menu & platform ----------
+        const menuPanel = document.getElementById('menuPanel');
+        document.getElementById('menuBtn').onclick = () => menuPanel.classList.toggle('hidden');
+        document.querySelectorAll('.menuLink').forEach(a => a.addEventListener('click', () => menuPanel.classList.add('hidden')));
+
+        const noticeEl = document.getElementById('notice');
+        let noticeTimer;
+        function tampilNotice(teks) {
+            noticeEl.textContent = teks;
+            noticeEl.classList.remove('hidden');
+            clearTimeout(noticeTimer);
+            noticeTimer = setTimeout(() => noticeEl.classList.add('hidden'), 4000);
+        }
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.onclick = () => {
+                const p = tab.dataset.p;
+                if (p !== 'tiktok') {
+                    const nama = tab.textContent.replace('Segera', '').replace(/[^A-Za-z]/g, '');
+                    tampilNotice('Download ' + nama + ' segera hadir. Saat ini baru TikTok yang tersedia.');
+                }
+            };
+        });
+
+        // ---------- Pesan iklan ke chat Telegram ----------
         function kirimIklanTelegram() {
             try {
                 const tg = window.Telegram && window.Telegram.WebApp;
                 if (!tg || !tg.initData) return;
-                const n = hitung("dlCount");
-                if (n % IKLAN_SETIAP !== 0) return;
+                if (hitung("dlCount") % IKLAN_SETIAP !== 0) return;
                 fetch(IKLAN_URL, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
@@ -163,7 +239,77 @@
             } catch (e) {}
         }
 
-        // ====== PEMUTAR VAST SEDERHANA (tanpa SDK) ======
+        // ---------- Unduh file ----------
+        function unduh(url, nama) {
+            const tg = window.Telegram && window.Telegram.WebApp;
+            if (tg && tg.initData && tg.downloadFile && tg.isVersionAtLeast && tg.isVersionAtLeast('8.0')) {
+                try { tg.downloadFile({ url: url, file_name: nama }); return; } catch (e) {}
+            }
+            // Browser biasa: coba ambil sebagai file, kalau gagal buka link
+            fetch(url).then(r => r.blob()).then(b => {
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(b);
+                a.download = nama;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            }).catch(() => { window.open(url, '_blank'); });
+        }
+
+        // ---------- Iklan sela (banner + tombol tutup) ----------
+        let bannerSela = false;
+        function muatBannerSela() {
+            if (bannerSela) return;
+            bannerSela = true;
+            const box = document.getElementById('intBanner');
+            box.textContent = '';
+            const s = document.createElement('script');
+            s.settings = {};
+            s.async = true;
+            s.referrerPolicy = 'no-referrer-when-downgrade';
+            s.src = "//embellishedcoffee.com/bBX_VJs.dDGLle0PYSWTcg/JeamW9ruGZiUmlVkePFTLcG2QNajrEw4fMzDCEkt/NgzvYe2bMnTZgiwXNhQl";
+            box.appendChild(s);
+        }
+
+        const inter = document.getElementById('interstitial');
+        const intClose = document.getElementById('intClose');
+        let unduhMenunggu = null, intTimer = null;
+
+        function mintaUnduh(url, nama) {
+            if (INTERSTITIAL_SETIAP <= 0 || hitung("intCount") % INTERSTITIAL_SETIAP !== 0) {
+                unduh(url, nama);
+                return;
+            }
+            unduhMenunggu = { url: url, nama: nama };
+            inter.classList.remove('hidden');
+            muatBannerSela();
+
+            let sisa = INTERSTITIAL_DETIK;
+            intClose.disabled = true;
+            intClose.className = "w-full py-3 rounded-2xl font-bold bg-gray-200 text-gray-500";
+            intClose.textContent = "Tutup dalam " + sisa;
+            clearInterval(intTimer);
+            intTimer = setInterval(() => {
+                sisa--;
+                if (sisa > 0) {
+                    intClose.textContent = "Tutup dalam " + sisa;
+                } else {
+                    clearInterval(intTimer);
+                    intClose.disabled = false;
+                    intClose.className = "w-full py-3 rounded-2xl font-bold bg-[#0f172a] text-white";
+                    intClose.textContent = "TUTUP ✕ & UNDUH";
+                }
+            }, 1000);
+        }
+
+        intClose.onclick = () => {
+            inter.classList.add('hidden');
+            const d = unduhMenunggu;
+            unduhMenunggu = null;
+            if (d) unduh(d.url, d.nama);
+        };
+
+        // ---------- Pemutar VAST sederhana (tanpa SDK) ----------
         function pingUrl(u) {
             if (!u) return;
             u = u.trim()
@@ -193,7 +339,6 @@
             const next = xml.querySelector("Wrapper > VASTAdTagURI");
             if (next) return ambilVast(next.textContent.trim(), trk, depth + 1);
 
-            // pilih file video mp4 dengan lebar paling dekat 480
             let best = null, bestDiff = 1e9;
             xml.querySelectorAll("MediaFile").forEach(m => {
                 const type = (m.getAttribute("type") || "").toLowerCase();
@@ -215,7 +360,7 @@
                 const adMore = document.getElementById("adMore");
                 let selesai = false, mulai = false;
                 const sent = {};
-                let trk = { imp: [], err: [], ev: {}, clickTrk: [], click: "", media: null };
+                const trk = { imp: [], err: [], ev: {}, clickTrk: [], click: "", media: null };
 
                 const fire = (name) => {
                     if (sent[name]) return;
@@ -280,8 +425,8 @@
                 }
             });
         }
-        // ================================================
 
+        // ---------- Form utama ----------
         const form = document.getElementById('dlForm');
         const urlInput = document.getElementById('urlInput');
         const result = document.getElementById('result');
@@ -290,62 +435,59 @@
         const preview = document.getElementById('preview');
         const dlVideo = document.getElementById('dlVideo');
         const dlAudio = document.getElementById('dlAudio');
+        let videoDlUrl = "", audioDlUrl = "";
 
         document.getElementById('pasteBtn').onclick = async () => {
-            const text = await navigator.clipboard.readText();
-            urlInput.value = text;
+            try { urlInput.value = await navigator.clipboard.readText(); } catch (e) {}
         };
 
-        function tampilkanHasil(videoLink) {
+        dlVideo.onclick = () => mintaUnduh(videoDlUrl, "Video_KonvertCepat.mp4");
+        dlAudio.onclick = () => {
+            if (!audioDlUrl) { tampilNotice("Audio tidak tersedia untuk video ini."); return; }
+            mintaUnduh(audioDlUrl, "Audio_KonvertCepat.mp3");
+        };
+
+        function tampilkanHasil() {
             loading.style.display = 'none';
             displayArea.classList.remove('hidden');
-
-            // Kirim iklan ke pesan Telegram
             kirimIklanTelegram();
-
-            // Simulasi klik download otomatis
-            setTimeout(() => {
-                const autoLink = document.createElement('a');
-                autoLink.href = videoLink + "&download=1";
-                autoLink.download = "Video_KonvertCepat.mp4";
-                document.body.appendChild(autoLink);
-                autoLink.click();
-                document.body.removeChild(autoLink);
-            }, 500);
         }
 
         form.onsubmit = async (e) => {
             e.preventDefault();
+            const link = urlInput.value.trim();
+            if (link.indexOf('tiktok.com') === -1) {
+                tampilNotice("Link harus dari TikTok (tiktok.com).");
+                return;
+            }
             result.classList.remove('hidden');
             loading.style.display = 'block';
             displayArea.classList.add('hidden');
             document.getElementById('adBox').classList.add('hidden');
 
             try {
-                const res = await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(urlInput.value.trim())}`);
+                const res = await fetch(`https://www.tikwm.com/api/?url=${encodeURIComponent(link)}`);
                 const json = await res.json();
-                
-                if(json.data) {
+
+                if (json.data) {
                     const videoLink = json.data.play || json.data.url;
                     const audioLink = json.data.music || "";
 
                     preview.src = videoLink;
-                    dlVideo.href = videoLink + "&download=1";
-                    dlAudio.href = audioLink + "&download=1";
+                    videoDlUrl = videoLink + "&download=1";
+                    audioDlUrl = audioLink ? audioLink + "&download=1" : "";
 
-                    // Iklan video dulu (tiap VIDEO_AD_SETIAP kali), lalu tampilkan hasil
                     if (VIDEO_AD_SETIAP > 0 && hitung("vidCount") % VIDEO_AD_SETIAP === 0) {
                         await jalankanIklanVideo();
                     }
-                    tampilkanHasil(videoLink);
-
+                    tampilkanHasil();
                 } else {
-                    alert("Maaf Lan, link video tidak ditemukan!");
                     result.classList.add('hidden');
+                    tampilNotice("Video tidak ditemukan. Pastikan link-nya benar.");
                 }
-            } catch(err) {
-                alert("Gangguan koneksi.");
+            } catch (err) {
                 result.classList.add('hidden');
+                tampilNotice("Gangguan koneksi. Coba lagi.");
             }
         };
     </script>
